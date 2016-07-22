@@ -17,15 +17,15 @@ class GenericEncoder
 
 	public function encodeToFormat ($data, $format)
 	{
-		$encoder = $this->encoderFactory->createForFormat($format);
-		$data = $this->prepareData($data, $format);
+		$encoder = $this->encoderFactory->createForFormat($data, $format);
+		$data = $this->encoder->prepareData($data);
 		$rtn = $encoder->encode($data);
 
 		return $rtn;
 	}
 
 	public function prepareData($data, $format)
-	{
+	{//TODO
 		return $data;
 	}
 

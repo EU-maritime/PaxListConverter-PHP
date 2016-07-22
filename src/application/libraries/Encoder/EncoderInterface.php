@@ -9,4 +9,5 @@
 interface EncoderInterface
 {
 	public function encode($data);
+	public function prepareData($data);
 }

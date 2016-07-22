@@ -17,12 +17,13 @@
 			<input type="submit" value="Upload File"/>
 		 </form>
 		<?php
-		if ($name){
+		if ($name != ''){
 			echo '<table>';
 			echo '<tr><td>error</td><td>'.$error.'</td>'.'</tr>';
 			echo '<tr><td>name</td><td>'.$name.'</td>'.'</tr>';
 			echo '<tr><td>type</td><td>'.$type.'</td>'.'</tr>';
 			echo '<tr><td>size</td><td>'.$size.'</td>'.'</tr>';
+			echo '<tr><td>allowed</td><td>'.$allowed.'</td>'.'</tr>';
 			echo '</table>';
 		}
 		?>

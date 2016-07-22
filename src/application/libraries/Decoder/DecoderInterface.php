@@ -9,4 +9,5 @@
 interface DecoderInterface
 {
 	public function decode($data);
+	public function prepareData($data);
 }

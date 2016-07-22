@@ -1,5 +1,5 @@
 <?php
-
+require_once 'Decoder/DecoderFactoryInterface.php';
 /**
  * Created by PhpStorm.
  * User: wis

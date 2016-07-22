@@ -1,4 +1,5 @@
 <?php
+require_once 'Encoder/EncoderFactoryInterface.php';
 
 /**
  * Created by PhpStorm.

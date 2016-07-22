@@ -17,9 +17,9 @@ class GenericDecoder
 
 	public function decodeToFormat ($data, $format)
 	{
-		$encoder = $this->decoderFactory->createForFormat($format);
-		$data = $this->prepareData($data, $format);
-		$rtn = $encoder->decode($data);
+		$decoder = $this->decoderFactory->createForFormat($data, $format);
+		$data = $decoder->prepareData($data);
+		$rtn = $decoder->decode($data);
 
 		return $rtn;
 	}
