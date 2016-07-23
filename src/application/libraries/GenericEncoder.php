@@ -10,23 +10,25 @@ class GenericEncoder
 {
 	private $encoderFactory;
 
+	/**
+	 * GenericEncoder constructor.
+	 * @param EncoderFactory $encoderFactory
+	 */
 	public function __construct(EncoderFactory $encoderFactory)
 	{
-		$this->encoderFactory =$encoderFactory;
+		$this->encoderFactory = $encoderFactory;
 	}
 
+	/**
+	 * @param $data
+	 * @param string $format
+	 * @return mixed
+	 */
 	public function encodeToFormat ($data, $format)
 	{
 		$encoder = $this->encoderFactory->createForFormat($data, $format);
-		$data = $this->encoder->prepareData($data);
 		$rtn = $encoder->encode($data);
 
 		return $rtn;
 	}
-
-	public function prepareData($data, $format)
-	{//TODO
-		return $data;
-	}
-
 }

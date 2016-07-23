@@ -8,6 +8,9 @@
  */
 interface DecoderInterface
 {
+	/**
+	 * @param $data
+	 * @return stdClass|null decode $data
+	 */
 	public function decode($data);
-	public function prepareData($data);
 }

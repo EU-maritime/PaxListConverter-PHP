@@ -10,16 +10,25 @@ class DecoderFactory implements DecoderFactoryInterface
 {
 	private $factories = array();
 
+	/**
+	 * Register a callable that returns an instance of DecoderInterface for the given format
+	 * @param string   $format
+	 * @param callable $factory
+	 */
 	public function addDecoderFactory($format, callable $factory)
 	{
 		$this->factories[$format] = $factory;
 	}
 
-	public function createFromFormat ($format)
+	/**
+	 * @param string $format
+	 * @return DecoderInterface concrete Class defined by $format
+	 */
+	public function createForFormat ($format)
 	{
 		$factory = $this->factories[$format];
-		$encoder = $factory();
+		$decoder = $factory();
 
-		return $encoder;
+		return $decoder;
 	}
 }

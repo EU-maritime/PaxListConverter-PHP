@@ -8,12 +8,22 @@
  */
 class JsonEncoder implements EncoderInterface
 {
-	public function encodeToFormat($data, $format)
+	/**
+	 * @param $data
+	 * @return string
+	 */
+	public function encode($data)
 	{
+		$data = $this->prepareData($data);
 
+		return json_encode($data);
 	}
 
-	public function prepareData($data)
+	/**
+	 * @param $data
+	 * @return mixed
+	 */
+	private function prepareData($data)
 	{
 		// TODO: Implement prepareData() method.
 		return $data;

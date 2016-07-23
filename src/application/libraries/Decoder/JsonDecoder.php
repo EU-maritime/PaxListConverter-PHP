@@ -8,8 +8,24 @@
  */
 class JsonDecoder implements DecoderInterface
 {
+	/**
+	 * @param $data
+	 * @return stdClass|null
+	 */
 	public function decode($data)
 	{
+		$data = $this->prepareData($data);
 
+		return json_decode($data);
+	}
+
+	/**
+	 * @param $data
+	 * @return mixed
+	 */
+	private function prepareData($data)
+	{
+		// TODO: Implement prepareData() method.
+		return $data;
 	}
 }

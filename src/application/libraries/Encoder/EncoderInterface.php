@@ -8,6 +8,9 @@
  */
 interface EncoderInterface
 {
+	/**
+	 * @param $data
+	 * @return mixed
+	 */
 	public function encode($data);
-	public function prepareData($data);
 }

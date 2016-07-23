@@ -8,5 +8,12 @@
  */
 interface EncoderFactoryInterface
 {
+	/**
+	 * Create a encoder for the given format
+	 *
+	 * @param string $format
+	 * @return EncoderInterface concrete Class defined by $format
+	 */
+
 	public function createForFormat($format);
 }

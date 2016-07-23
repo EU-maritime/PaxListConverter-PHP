@@ -8,5 +8,11 @@
  */
 interface DecoderFactoryInterface
 {
-	public function createFromFormat($format);
+	/**
+	 * Create a decoder for the given format
+	 *
+	 * @param string $format
+	 * @return DecoderInterface concrete Class defined by $format
+	 */
+	public function createForFormat($format);
 }

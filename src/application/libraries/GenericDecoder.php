@@ -10,23 +10,25 @@ class GenericDecoder
 {
 	private $decoderFactory;
 
-	public function __construct(DecoderFactory $decoderFactory)
+	/**
+	 * GenericDecoder constructor.
+	 * @param DecoderFactory $decoderFactory
+	 */
+	public function __construct(DecoderFactoryInterface $decoderFactory)
 	{
-		$this->decoderFactory =$decoderFactory;
+		$this->decoderFactory = $decoderFactory;
 	}
 
+	/**
+	 * @param $data
+	 * @param string $format
+	 * @return mixed
+	 */
 	public function decodeToFormat ($data, $format)
 	{
-		$decoder = $this->decoderFactory->createForFormat($data, $format);
-		$data = $decoder->prepareData($data);
+		$decoder = $this->decoderFactory->createForFormat($format);
 		$rtn = $decoder->decode($data);
 
 		return $rtn;
 	}
-
-	public function prepareData($data, $format)
-	{
-		return $data;
-	}
-
 }
