@@ -8,7 +8,7 @@ require_once LIBRARIES.'Decoder/DecoderInterface.php';
  * Date: 22/07/16
  * Time: 13:33
  */
-class Excel5Decoder implements DecoderInterface
+class Excel2007Decoder implements DecoderInterface
 {
 	/**
 	 * @param $data
@@ -30,7 +30,7 @@ class Excel5Decoder implements DecoderInterface
 		$fields = [];
 		$dbFields = [];
 
-		$objReader = PHPExcel_IOFactory::createReader('Excel5');
+		$objReader = PHPExcel_IOFactory::createReader('Excel2007');
 		$objPHPExcel = $objReader->load($data);
 		if ($objPHPExcel) {
 			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
@@ -64,7 +64,7 @@ class Excel5Decoder implements DecoderInterface
 					}//row iter
 				}
 		} else {
-			log_message('INFO', 'file '.$data.' is not an Excel5 format');
+			log_message('INFO', 'file '.$data.' is not an Excel2007 format');
 		}
 
 		// TODO: Implement prepareData() method.

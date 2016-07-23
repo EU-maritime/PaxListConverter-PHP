@@ -1,5 +1,6 @@
 <?php
 require_once LIBRARIES.'Decoder/Excel5Decoder.php';
+require_once LIBRARIES.'Decoder/Excel2007Decoder.php';
 require_once LIBRARIES.'Decoder/DecoderInterface.php';
 /**
  * Created by PhpStorm.
@@ -61,6 +62,13 @@ class Load extends CI_Controller
 					function(){return new Excel5Decoder();}
 				);
 			break;
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				$format = 'Excel2007';
+				$decoderFactory->addDecoderFactory(
+					$format,
+					function(){return new Excel2007Decoder();}
+				);
+			break;
 			case 'text/plain': //tab separated
 				$str = file_get_contents($file);
 				echo '<table border="1px"><tr><td>';
@@ -78,6 +86,7 @@ class Load extends CI_Controller
 		$genericDecoder = new GenericDecoder($decoderFactory);
 		$genericDecoder->test();
 		$my_decode_data = $genericDecoder->decodeToFormat($file, $format);
+		echo '<br>';
 		var_dump($my_decode_data);
 	}
 }

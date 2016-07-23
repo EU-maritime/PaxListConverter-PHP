@@ -34,6 +34,6 @@ class GenericDecoder
 
 	public function test()
 	{
-		echo __METHOD__.PHP_EOL;
+		echo __METHOD__.'<br>';
 	}
 }
