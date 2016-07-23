@@ -116,6 +116,9 @@ switch (ENVIRONMENT)
  */
 	$application_folder = '../application';
 
+	$vendor_folder = '../vendor'; // wis added
+	$libraries_folder = '../application/libraries'; // wis added
+
 /*
  *---------------------------------------------------------------
  * VIEW DIRECTORY NAME
@@ -304,6 +307,10 @@ switch (ENVIRONMENT)
 	}
 
 	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
+
+	//wis added:
+	define('VENDOR', $vendor_folder.DIRECTORY_SEPARATOR);
+	define('LIBRARIES', $libraries_folder.DIRECTORY_SEPARATOR);
 
 /*
  * --------------------------------------------------------------------

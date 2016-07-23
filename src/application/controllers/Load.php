@@ -1,4 +1,6 @@
 <?php
+require_once LIBRARIES.'Decoder/Excel5Decoder.php';
+require_once LIBRARIES.'Decoder/DecoderInterface.php';
 /**
  * Created by PhpStorm.
  * User: wis
@@ -29,7 +31,7 @@ class Load extends CI_Controller
 				switch ($dataType) {
 					case 'text/plain': //tab separated
 					case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'://excel new
-					case 'application/vnd.ms-excel': //excel old
+					case 'application/vnd.ms-excel': //excel old Excel5
 					case 'text/csv': //comma separated
 						$data['allowed'] = 'yes';
 						$this->convertData($filedata['tmp_name'], $dataType);
@@ -46,15 +48,36 @@ class Load extends CI_Controller
 		$this->load->view('Load', $data);
 	}
 
-	public function convertData($file, $format)
+	public function convertData($file, $fileFormat)
 	{
 		$this->load->library('DecoderFactory');
+		$decoderFactory = new DecoderFactory();
+		$decoderFactory->test();
+		switch ($fileFormat){
+			case 'application/vnd.ms-excel': //excel old Excel5
+				$format = 'Excel5';
+				$decoderFactory->addDecoderFactory(
+					$format,
+					function(){return new Excel5Decoder();}
+				);
+			break;
+			case 'text/plain': //tab separated
+				$str = file_get_contents($file);
+				echo '<table border="1px"><tr><td>';
+				$strData = str_replace(["\t","\n"], ['</td><td>', '</td></tr><tr><td>'], $str);
+				echo $strData;
+				echo '</td></tr></table>';
+				return;
+			break;
+			default:
+				log_message('INFO', 'Unsupported format: '.$fileFormat);
+				return;
+		}
 
-		$str = file_get_contents($file);
-		echo '<table border="1px"><tr><td>';
-		$strData = str_replace(["\t","\n"], ['</td><td>', '</td></tr><tr><td>'], $str);
-		echo $strData;
-		echo '</td></tr></table>';
-
+		$this->load->library('GenericDecoder', [$decoderFactory]);
+		$genericDecoder = new GenericDecoder($decoderFactory);
+		$genericDecoder->test();
+		$my_decode_data = $genericDecoder->decodeToFormat($file, $format);
+		var_dump($my_decode_data);
 	}
 }

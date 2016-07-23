@@ -14,7 +14,7 @@ class GenericDecoder
 	 * GenericDecoder constructor.
 	 * @param DecoderFactory $decoderFactory
 	 */
-	public function __construct(DecoderFactoryInterface $decoderFactory)
+	public function __construct(/*DecoderFactoryInterface*/ $decoderFactory)
 	{
 		$this->decoderFactory = $decoderFactory;
 	}
@@ -30,5 +30,10 @@ class GenericDecoder
 		$rtn = $decoder->decode($data);
 
 		return $rtn;
+	}
+
+	public function test()
+	{
+		echo __METHOD__.PHP_EOL;
 	}
 }

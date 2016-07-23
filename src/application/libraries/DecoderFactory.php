@@ -31,4 +31,9 @@ class DecoderFactory implements DecoderFactoryInterface
 
 		return $decoder;
 	}
+
+	public function test()
+	{
+		echo __METHOD__.PHP_EOL;
+	}
 }
