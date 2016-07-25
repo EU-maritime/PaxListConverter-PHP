@@ -1,6 +1,8 @@
 <?php
 require_once LIBRARIES.'Decoder/Excel5Decoder.php';
 require_once LIBRARIES.'Decoder/Excel2007Decoder.php';
+require_once LIBRARIES.'Decoder/TxtDecoder.php';
+require_once LIBRARIES.'Decoder/CsvDecoder.php';
 require_once LIBRARIES.'Decoder/DecoderInterface.php';
 /**
  * Created by PhpStorm.
@@ -27,15 +29,16 @@ class Load extends CI_Controller
 			$dataType = $filedata['type'];
 			$dataError = $filedata['error'];
 			$dataSize = $filedata['size'];
-			if ($dataError == 0) {
+			$dataList = '';
 
+			if ($dataError == 0) {
 				switch ($dataType) {
 					case 'text/plain': //tab separated
 					case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'://excel new
 					case 'application/vnd.ms-excel': //excel old Excel5
 					case 'text/csv': //comma separated
 						$data['allowed'] = 'yes';
-						$this->convertData($filedata['tmp_name'], $dataType);
+						$dataList = $this->convertData($filedata['tmp_name'], $dataType);
 					break;
 					default;
 						$data['allowed'] = 'no';
@@ -45,6 +48,7 @@ class Load extends CI_Controller
 			$data['type'] = $dataType;
 			$data['error'] = $dataError;
 			$data['size'] = $dataSize;
+			$data['list'] = $dataList;
 		}
 		$this->load->view('Load', $data);
 	}
@@ -70,12 +74,18 @@ class Load extends CI_Controller
 				);
 			break;
 			case 'text/plain': //tab separated
-				$str = file_get_contents($file);
-				echo '<table border="1px"><tr><td>';
-				$strData = str_replace(["\t","\n"], ['</td><td>', '</td></tr><tr><td>'], $str);
-				echo $strData;
-				echo '</td></tr></table>';
-				return;
+				$format = 'Txt';
+				$decoderFactory->addDecoderFactory(
+					$format,
+					function(){return new TxtDecoder();}
+				);
+			break;
+			case 'text/csv': //comma separated value
+				$format = 'Csv';
+				$decoderFactory->addDecoderFactory(
+					$format,
+					function(){return new CsvDecoder();}
+				);
 			break;
 			default:
 				log_message('INFO', 'Unsupported format: '.$fileFormat);
@@ -85,8 +95,8 @@ class Load extends CI_Controller
 		$this->load->library('GenericDecoder', [$decoderFactory]);
 		$genericDecoder = new GenericDecoder($decoderFactory);
 		$genericDecoder->test();
-		$my_decode_data = $genericDecoder->decodeToFormat($file, $format);
-		echo '<br>';
-		var_dump($my_decode_data);
+		$list = $genericDecoder->decodeToFormat($file, $format);
+
+		return $list;
 	}
 }

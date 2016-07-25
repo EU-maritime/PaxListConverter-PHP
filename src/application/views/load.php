@@ -26,6 +26,10 @@
 			echo '<tr><td>allowed</td><td>'.$allowed.'</td>'.'</tr>';
 			echo '</table>';
 		}
+		if ($list != ''){
+			echo '<h1>Passenger List:</h1>';
+			echo $list;
+		}
 		?>
 	</body>
 </html>
