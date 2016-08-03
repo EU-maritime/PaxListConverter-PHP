@@ -21,6 +21,7 @@ class Load extends CI_Controller
 	public function index()
 	{
 		$data['name'] = '';
+		$data['list'] = '';
 		if ($_FILES) {
 			//print_r($_FILES);
 			echo '<hr>';

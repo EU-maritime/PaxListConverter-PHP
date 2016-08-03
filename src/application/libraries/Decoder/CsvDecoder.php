@@ -1,6 +1,5 @@
 <?php
 require_once LIBRARIES.'Decoder/DecoderInterface.php';
-
 /**
  * Created by PhpStorm.
  * User: wis
@@ -35,3 +34,10 @@ class CsvDecoder implements DecoderInterface
 		return $data;
 	}
 }
+
+/*
+$objReader = PHPExcel_IOFactory::createReader('CSV')->setDelimiter(',')
+                               ->setEnclosure('"')
+                               ->setLineEnding("\r\n")
+                               ->setSheetIndex(0);
+*/

@@ -1,7 +1,6 @@
 <?php
-require_once VENDOR . 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
 require_once LIBRARIES.'Decoder/DecoderInterface.php';
-
+require_once VENDOR . 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
 /**
  * Created by PhpStorm.
  * User: wis
