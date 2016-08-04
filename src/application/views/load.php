@@ -5,9 +5,11 @@
 		<title>Welcome to Maritime Passenger List Loader</title>
 	</head>
 	<body>
+		<hr>
 		<h1>
 			Welcome to Maritime Passenger Loader
 		</h1>
+		<hr>
 		<form enctype="multipart/form-data" 
 		      action="" 
 		      method="post"
@@ -16,6 +18,7 @@
 			 <input type="file" name="filedata"/><br/><br/>
 			<input type="submit" value="Upload File"/>
 		 </form>
+		<hr>
 		<?php
 		if ($name != ''){
 			echo '<table>';
@@ -26,10 +29,7 @@
 			echo '<tr><td>allowed</td><td>'.$allowed.'</td>'.'</tr>';
 			echo '</table>';
 		}
-		if ($list != ''){
-			echo '<h1>Passenger List:</h1>';
 			echo $list;
-		}
 		?>
 	</body>
 </html>

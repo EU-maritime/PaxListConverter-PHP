@@ -8,7 +8,7 @@ require_once 'Decoder/DecoderFactoryInterface.php';
  */
 class DecoderFactory implements DecoderFactoryInterface
 {
-	private $factories = array();
+	private $factories = [];
 
 	/**
 	 * Register a callable that returns an instance of DecoderInterface for the given format

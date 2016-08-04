@@ -25,19 +25,23 @@ class CsvDecoder implements DecoderInterface
 	 */
 	private function prepareData($dataFile)
 	{
-		$str = file_get_contents($dataFile);
-		$data = '<table border="1px"><tr><td>';
-		$strData = str_replace([",","\r"], ['</td><td>', '</td></tr><tr><td>'], $str);
-		$data .= $strData;
-		$data .= '</td></tr></table>';
+		//$str = file_get_contents($dataFile);
+		$handle = fopen($dataFile, 'rt');
+		//read first line
+		$keys = fgetcsv($handle);
+		if ($keys){
+			//verify keys
+		}
+		$ct = 0;
+		while ($nextLine = fgetcsv($handle)){
+			$dataLine[] = array_combine($keys, $nextLine);
+			++$ct;
+		}//loop
+		echo '<h3>'.$ct.' lines read</h3>';
+		//create std struct
+		//return std struct
 
-		return $data;
+		return $dataLine;
 	}
 }
 
-/*
-$objReader = PHPExcel_IOFactory::createReader('CSV')->setDelimiter(',')
-                               ->setEnclosure('"')
-                               ->setLineEnding("\r\n")
-                               ->setSheetIndex(0);
-*/

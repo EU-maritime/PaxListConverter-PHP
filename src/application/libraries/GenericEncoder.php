@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: wis
@@ -14,9 +13,9 @@ class GenericEncoder
 	 * GenericEncoder constructor.
 	 * @param EncoderFactory $encoderFactory
 	 */
-	public function __construct(EncoderFactory $encoderFactory)
+	public function __construct(/*EncoderFactory*/ $params)
 	{
-		$this->encoderFactory = $encoderFactory;
+		$this->encoderFactory = $params;
 	}
 
 	/**
@@ -26,9 +25,14 @@ class GenericEncoder
 	 */
 	public function encodeToFormat ($data, $format)
 	{
-		$encoder = $this->encoderFactory->createForFormat($data, $format);
+		$encoder = $this->encoderFactory->createForFormat($format);
 		$rtn = $encoder->encode($data);
 
 		return $rtn;
+	}
+
+	public function test()
+	{
+		echo __METHOD__.'<br>';
 	}
 }

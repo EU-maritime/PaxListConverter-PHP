@@ -57,8 +57,8 @@ class Excel5Decoder implements DecoderInterface
 							}//cell iter data
 
 						//	echo '<br>';
-							print_r($wh);
-							echo '<br>';
+						//	print_r($wh);
+						//	echo '<br>';
 						}
 					}//row iter
 				}
@@ -67,7 +67,7 @@ class Excel5Decoder implements DecoderInterface
 		}
 
 		// TODO: Implement prepareData() method.
-		return $data;
+		return $wh;
 	}
 
 	private function match(array $fields)

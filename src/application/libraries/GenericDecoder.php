@@ -13,9 +13,9 @@ class GenericDecoder
 	 * GenericDecoder constructor.
 	 * @param DecoderFactory $decoderFactory
 	 */
-	public function __construct(/*DecoderFactoryInterface*/ $decoderFactory)
+	public function __construct(/*DecoderFactory*/ $params)
 	{
-		$this->decoderFactory = $decoderFactory;
+		$this->decoderFactory = $params;
 	}
 
 	/**

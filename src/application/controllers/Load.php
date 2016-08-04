@@ -4,6 +4,8 @@ require_once LIBRARIES.'Decoder/Excel2007Decoder.php';
 require_once LIBRARIES.'Decoder/TxtDecoder.php';
 require_once LIBRARIES.'Decoder/CsvDecoder.php';
 require_once LIBRARIES.'Decoder/DecoderInterface.php';
+require_once LIBRARIES.'Encoder/HtmlEncoder.php';
+require_once LIBRARIES.'Encoder/EncoderInterface.php';
 /**
  * Created by PhpStorm.
  * User: wis
@@ -22,6 +24,8 @@ class Load extends CI_Controller
 	{
 		$data['name'] = '';
 		$data['list'] = '';
+		$data['allowed'] = 'no';
+		//Decoder part
 		if ($_FILES) {
 			//print_r($_FILES);
 			echo '<hr>';
@@ -31,7 +35,6 @@ class Load extends CI_Controller
 			$dataError = $filedata['error'];
 			$dataSize = $filedata['size'];
 			$dataList = '';
-
 			if ($dataError == 0) {
 				switch ($dataType) {
 					case 'text/plain': //tab separated
@@ -39,22 +42,29 @@ class Load extends CI_Controller
 					case 'application/vnd.ms-excel': //excel old Excel5
 					case 'text/csv': //comma separated
 						$data['allowed'] = 'yes';
-						$dataList = $this->convertData($filedata['tmp_name'], $dataType);
+						$dataList = $this->decodeData($filedata['tmp_name'], $dataType);
 					break;
 					default;
 						$data['allowed'] = 'no';
 				}
 			}
+		}
+		//Encoder part (HtmlEncoder)
+		if ($data['allowed'] === 'yes')
+		{
+			$format = 'HTML';
+			$dataHtml = $this->encodeData($format, $dataList);
+
 			$data['name'] = $dataName;
 			$data['type'] = $dataType;
 			$data['error'] = $dataError;
 			$data['size'] = $dataSize;
-			$data['list'] = $dataList;
+			$data['list'] = $dataHtml;
 		}
-		$this->load->view('Load', $data);
+		$this->load->view('load', $data);
 	}
 
-	public function convertData($file, $fileFormat)
+	public function decodeData($file, $fileFormat)
 	{
 		$this->load->library('DecoderFactory');
 		$decoderFactory = new DecoderFactory();
@@ -93,11 +103,38 @@ class Load extends CI_Controller
 				return;
 		}
 
-		$this->load->library('GenericDecoder', [$decoderFactory]);
+		$this->load->library('GenericDecoder', ['deFac' => $decoderFactory]);
 		$genericDecoder = new GenericDecoder($decoderFactory);
 		$genericDecoder->test();
 		$list = $genericDecoder->decodeToFormat($file, $format);
 
 		return $list;
+	}
+
+	public function encodeData($format, $dataList)
+	{
+		$this->load->library('EncoderFactory');
+		$encoderFactory = new EncoderFactory();
+		$encoderFactory->test();
+		$html = '<h2>No valid data found</h2>'; //needs to be in HtmlEncoder
+
+		switch ($format) {
+			case 'HTML':
+				$encoderFactory->addEncoderFactory(
+					$format,
+					function(){return new HtmlEncoder();}
+				);
+			break;
+		}
+		$this->load->library('GenericEncoder', ['enFac' => $encoderFactory]);
+		$genericEncoder = new GenericEncoder($encoderFactory);
+		$genericEncoder->test();
+		$list = $genericEncoder->encodeToFormat($dataList, $format);
+
+		return $list;
+/*		$encode = [
+			'format' => $format,
+		    'paxlist' => $list,
+		];*/
 	}
 }

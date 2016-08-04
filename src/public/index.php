@@ -311,7 +311,7 @@ switch (ENVIRONMENT)
 	//wis added:
 	define('VENDOR', $vendor_folder.DIRECTORY_SEPARATOR);
 	define('LIBRARIES', $libraries_folder.DIRECTORY_SEPARATOR);
-
+	ini_set("auto_detect_line_endings", true);
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE

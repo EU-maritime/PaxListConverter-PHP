@@ -9,8 +9,8 @@
 interface DecoderInterface
 {
 	/**
-	 * @param $data
+	 * @param string $format
 	 * @return stdClass|null decode $data
 	 */
-	public function decode($data);
+	public function decode($format);
 }

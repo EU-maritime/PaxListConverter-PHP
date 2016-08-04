@@ -1,6 +1,5 @@
 <?php
 require_once 'Encoder/EncoderFactoryInterface.php';
-
 /**
  * Created by PhpStorm.
  * User: wis
@@ -9,12 +8,12 @@ require_once 'Encoder/EncoderFactoryInterface.php';
  */
 class EncoderFactory implements EncoderFactoryInterface
 {
-	private $factories = array();
+	private $factories = [];
 
 	/**
 	 * Register a callable that returns an instance of EncoderInterface for the given format
 	 *
-	 * @param          $format
+	 * @param string   $format
 	 * @param callable $factory
 	 */
 	public function addEncoderFactory($format, callable $factory)
@@ -32,5 +31,10 @@ class EncoderFactory implements EncoderFactoryInterface
 		$encoder = $factory();
 
 		return $encoder;
+	}
+
+	public function test()
+	{
+		echo __METHOD__.'<br>';
 	}
 }
