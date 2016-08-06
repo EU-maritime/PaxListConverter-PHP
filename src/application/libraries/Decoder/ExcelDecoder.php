@@ -11,7 +11,7 @@ class ExcelDecoder implements DecoderInterface
 {
 	public function __construct($excelVersion)
 	{
-		$this->ExcelVersion = $excelVersion;
+		$this->excelVersion = $excelVersion;
 		$this->excelFirst = '1900-01-01';
 	}
 
@@ -56,7 +56,7 @@ class ExcelDecoder implements DecoderInterface
 	}
 
 	/**
-	 * @param $data the file to be read and decoded
+	 * @param string $data the file to be read and decoded
 	 * @return mixed
 	 */
 	private function prepareData($data)
@@ -64,7 +64,7 @@ class ExcelDecoder implements DecoderInterface
 		$fields = [];
 		$dbFields = [];
 
-		$objReader = PHPExcel_IOFactory::createReader($this->ExcelVersion);
+		$objReader = PHPExcel_IOFactory::createReader($this->excelVersion);
 		$objPHPExcel = $objReader->load($data);
 		if ($objPHPExcel) {
 			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
@@ -96,7 +96,7 @@ class ExcelDecoder implements DecoderInterface
 					}//row iter
 				}
 		} else {
-			log_message('INFO', 'file '.$data.' is not an Excel5 format');
+			log_message('INFO', 'file '.$data.' is not an '.$this->excelVersion.' format');
 		}
 		return $dataLine;
 	}

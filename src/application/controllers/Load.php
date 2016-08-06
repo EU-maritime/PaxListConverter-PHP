@@ -67,7 +67,6 @@ class Load extends CI_Controller
 	{
 		$this->load->library('DecoderFactory');
 		$decoderFactory = new DecoderFactory();
-		$decoderFactory->test();
 		switch ($fileFormat){
 			case 'application/vnd.ms-excel': //excel old Excel5
 				$format = 'Excel5';
@@ -104,7 +103,6 @@ class Load extends CI_Controller
 
 		$this->load->library('GenericDecoder', ['deFac' => $decoderFactory]);
 		$genericDecoder = new GenericDecoder($decoderFactory);
-		$genericDecoder->test();
 		$list = $genericDecoder->decodeToFormat($file, $format);
 
 		return $list;
@@ -114,8 +112,6 @@ class Load extends CI_Controller
 	{
 		$this->load->library('EncoderFactory');
 		$encoderFactory = new EncoderFactory();
-		$encoderFactory->test();
-		$html = '<h2>No valid data found</h2>'; //needs to be in HtmlEncoder
 
 		switch ($format) {
 			case 'HTML':
@@ -127,13 +123,9 @@ class Load extends CI_Controller
 		}
 		$this->load->library('GenericEncoder', ['enFac' => $encoderFactory]);
 		$genericEncoder = new GenericEncoder($encoderFactory);
-		$genericEncoder->test();
 		$list = $genericEncoder->encodeToFormat($dataList, $format);
 
 		return $list;
-/*		$encode = [
-			'format' => $format,
-		    'paxlist' => $list,
-		];*/
+
 	}
 }

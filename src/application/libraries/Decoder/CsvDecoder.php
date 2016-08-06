@@ -25,21 +25,23 @@ class CsvDecoder implements DecoderInterface
 	 */
 	private function prepareData($dataFile)
 	{
+		$dataLine = '';
 		$handle = fopen($dataFile, 'rt');
-		//read first line
-		$keys = fgetcsv($handle);
-		if ($keys){
-			//verify keys
+		if ($handle) {
+			$dataLine = [];
+			//read first line
+			$keys = fgetcsv($handle);
+			if ($keys) {
+				//verify keys
+			}
+			$ct = 0;
+			while ($nextLine = fgetcsv($handle)) {
+				$dataLine[] = array_combine($keys, $nextLine);
+				++$ct;
+			}
+			//create std struct
+			//return std struct
 		}
-		$ct = 0;
-		while ($nextLine = fgetcsv($handle)){
-			$dataLine[] = array_combine($keys, $nextLine);
-			++$ct;
-		}//loop
-		echo '<h3>'.$ct.' lines read</h3>';
-		//create std struct
-		//return std struct
-
 		return $dataLine;
 	}
 }

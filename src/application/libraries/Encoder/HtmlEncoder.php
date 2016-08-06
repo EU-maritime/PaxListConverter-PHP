@@ -24,23 +24,26 @@ class HtmlEncoder implements EncoderInterface
 	 */
 	private function prepareData($data)
 	{
-		$html = '<hr>';
-		$html .= '<table border="1">';
-		$header = $data[0];
-		echo '<tr>';
-		foreach ($header as $k => $v){
-			$html .= '<th>'.$k.'</th>';
-		}
-		echo '</tr>';
-		foreach ($data as $row) {
-			$html .= '<tr>';
-			foreach ($row as $v){
-				$html .= '<td>'.$v.'</td>';
+		if (is_array($data)) {
+			$html = '<hr>';
+			$html .= '<table border="1">';
+			$header = $data[0];
+			echo '<tr>';
+			foreach ($header as $k => $v){
+				$html .= '<th>'.$k.'</th>';
 			}
-			$html .= '</tr>';
+			echo '</tr>';
+			foreach ($data as $row) {
+				$html .= '<tr>';
+				foreach ($row as $v) {
+					$html .= '<td>' . $v . '</td>';
+				}
+				$html .= '</tr>';
+			}
+			$html .= '</table>';
+		} else {
+			$html = '<h2>No valid data found</h2>';
 		}
-		$html .= '</table>';
-
 		return $html;
 	}
 }
