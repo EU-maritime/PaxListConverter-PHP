@@ -1,6 +1,5 @@
 <?php
-require_once LIBRARIES.'Decoder/Excel5Decoder.php';
-require_once LIBRARIES.'Decoder/Excel2007Decoder.php';
+require_once LIBRARIES.'Decoder/ExcelDecoder.php';
 require_once LIBRARIES.'Decoder/TxtDecoder.php';
 require_once LIBRARIES.'Decoder/CsvDecoder.php';
 require_once LIBRARIES.'Decoder/DecoderInterface.php';
@@ -74,14 +73,14 @@ class Load extends CI_Controller
 				$format = 'Excel5';
 				$decoderFactory->addDecoderFactory(
 					$format,
-					function(){return new Excel5Decoder();}
+					function(){return new ExcelDecoder('Excel5');}
 				);
 			break;
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				$format = 'Excel2007';
 				$decoderFactory->addDecoderFactory(
 					$format,
-					function(){return new Excel2007Decoder();}
+					function(){return new ExcelDecoder('Excel2007');}
 				);
 			break;
 			case 'text/plain': //tab separated

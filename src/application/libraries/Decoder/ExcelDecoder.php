@@ -7,10 +7,11 @@ require_once VENDOR . 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
  * Date: 22/07/16
  * Time: 13:33
  */
-class Excel2007Decoder implements DecoderInterface
+class ExcelDecoder implements DecoderInterface
 {
-	public function __construct()
+	public function __construct($excelVersion)
 	{
+		$this->ExcelVersion = $excelVersion;
 		$this->excelFirst = '1900-01-01';
 	}
 
@@ -48,8 +49,7 @@ class Excel2007Decoder implements DecoderInterface
 	public function convertDate($exceldate)
 	{
 		$firstDate = new DateTime($this->excelFirst);	//get date of first excel date
-		$di = new DateInterval('P'.$exceldate.'D');     //create date interval
-		$firstDate->add($di);		                    //add $exceldate days to first excel date
+		$firstDate->add(new DateInterval('P'.$exceldate.'D'));		    //add $exceldate days to first excel date
 		$rtn = $firstDate->format('Y-m-d');     		//return YYYY-MM-DD datum
 
 		return $rtn;
@@ -64,7 +64,7 @@ class Excel2007Decoder implements DecoderInterface
 		$fields = [];
 		$dbFields = [];
 
-		$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+		$objReader = PHPExcel_IOFactory::createReader($this->ExcelVersion);
 		$objPHPExcel = $objReader->load($data);
 		if ($objPHPExcel) {
 			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
@@ -96,15 +96,15 @@ class Excel2007Decoder implements DecoderInterface
 					}//row iter
 				}
 		} else {
-			log_message('INFO', 'file '.$data.' is not an Excel2007 format');
+			log_message('INFO', 'file '.$data.' is not an Excel5 format');
 		}
 		return $dataLine;
 	}
 
 	private function match(array $fields)
 	{
-		//print_r($fields);
-		//echo '<br>';
+//		print_r($fields);
+//		echo '<br>';
 		return $fields;
 	}
 }
