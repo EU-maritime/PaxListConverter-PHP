@@ -1,7 +1,6 @@
 <?php
-require_once VENDOR . 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
 require_once LIBRARIES.'Decoder/DecoderInterface.php';
-
+require_once VENDOR . 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
 /**
  * Created by PhpStorm.
  * User: wis
@@ -10,6 +9,11 @@ require_once LIBRARIES.'Decoder/DecoderInterface.php';
  */
 class Excel2007Decoder implements DecoderInterface
 {
+	public function __construct()
+	{
+		$this->excelFirst = '1900-01-01';
+	}
+
 	/**
 	 * @param $data
 	 * @return stdClass|null
@@ -17,8 +21,38 @@ class Excel2007Decoder implements DecoderInterface
 	public function decode($data)
 	{
 		$data = $this->prepareData($data);
-
+		$data = $this->fixDate($data);
 		return $data;
+	}
+
+	/**
+	 * @param array $data
+	 * @return array
+	 */
+	public function fixDate($data)
+	{
+		foreach($data as &$line){
+			foreach ($line as $k => &$v){
+				if (strtoupper(substr($k, -5)) == 'EXCEL'){
+					$v = $this->convertDate($v);
+				}
+			}
+		}
+		return $data;//TODO change me
+	}
+
+	/**
+	 * @param integer $exceldate
+	 * @return string
+	 */
+	public function convertDate($exceldate)
+	{
+		$firstDate = new DateTime($this->excelFirst);	//get date of first excel date
+		$di = new DateInterval('P'.$exceldate.'D');     //create date interval
+		$firstDate->add($di);		                    //add $exceldate days to first excel date
+		$rtn = $firstDate->format('Y-m-d');     		//return YYYY-MM-DD datum
+
+		return $rtn;
 	}
 
 	/**
@@ -57,24 +91,20 @@ class Excel2007Decoder implements DecoderInterface
 								}//cell
 							}//cell iter data
 
-						//	echo '<br>';
-							print_r($wh);
-							echo '<br>';
+							$dataLine[] = $wh;
 						}
 					}//row iter
 				}
 		} else {
 			log_message('INFO', 'file '.$data.' is not an Excel2007 format');
 		}
-
-		// TODO: Implement prepareData() method.
-		return $data;
+		return $dataLine;
 	}
 
 	private function match(array $fields)
 	{
-		print_r($fields);
-		echo '<br>';
+		//print_r($fields);
+		//echo '<br>';
 		return $fields;
 	}
 }

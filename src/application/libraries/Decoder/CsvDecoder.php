@@ -25,7 +25,6 @@ class CsvDecoder implements DecoderInterface
 	 */
 	private function prepareData($dataFile)
 	{
-		//$str = file_get_contents($dataFile);
 		$handle = fopen($dataFile, 'rt');
 		//read first line
 		$keys = fgetcsv($handle);

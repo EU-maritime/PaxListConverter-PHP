@@ -26,12 +26,21 @@ class TxtDecoder implements DecoderInterface
 	 */
 	private function prepareData($dataFile)
 	{
-		$str = file_get_contents($dataFile);
-		$data = '<table border="1px"><tr><td>';
-		$strData = str_replace(["\t","\n"], ['</td><td>', '</td></tr><tr><td>'], $str);
-		$data .= $strData;
-		$data .= '</td></tr></table>';
+		$handle = fopen($dataFile, 'rt');
+		//read first line
+		$keyLine = fgets($handle);
+		if ($keyLine){
+			//get keys into array
+			$keys = explode("\t", $keyLine);
+			//verify keys
+		}
+		$ct = 0;
+		while ($nextLine = fgets($handle)){
+			$data = explode("\t", $nextLine);
+			$dataLine[] = array_combine($keys, $data);
+			++$ct;
+		}
 
-		return $data;
+		return $dataLine;
 	}
 }
