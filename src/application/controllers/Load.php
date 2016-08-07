@@ -1,10 +1,12 @@
 <?php
+require_once LIBRARIES.'Decoder/DecoderInterface.php';
 require_once LIBRARIES.'Decoder/ExcelDecoder.php';
 require_once LIBRARIES.'Decoder/TxtDecoder.php';
 require_once LIBRARIES.'Decoder/CsvDecoder.php';
-require_once LIBRARIES.'Decoder/DecoderInterface.php';
-require_once LIBRARIES.'Encoder/HtmlEncoder.php';
 require_once LIBRARIES.'Encoder/EncoderInterface.php';
+require_once LIBRARIES.'Encoder/HtmlEncoder.php';
+require_once LIBRARIES.'Filter/FilterInterface.php';
+require_once LIBRARIES.'Filter/PaxCbsFilter.php';
 /**
  * Created by PhpStorm.
  * User: wis
@@ -48,9 +50,13 @@ class Load extends CI_Controller
 				}
 			}
 		}
+		//Filter part (PaxCbsFilter)
+		if ($data['allowed'] === 'yes'){
+			$format = 'PaxCbs';
+			$dataList = $this->filterData($format, $dataList);
+		}
 		//Encoder part (HtmlEncoder)
-		if ($data['allowed'] === 'yes')
-		{
+		if ($data['allowed'] === 'yes'){
 			$format = 'HTML';
 			$dataHtml = $this->encodeData($format, $dataList);
 
@@ -63,6 +69,11 @@ class Load extends CI_Controller
 		$this->load->view('load', $data);
 	}
 
+	/**
+	 * @param string $file
+	 * @param string $fileFormat
+	 * @return mixed|void
+	 */
 	public function decodeData($file, $fileFormat)
 	{
 		$this->load->library('DecoderFactory');
@@ -108,6 +119,31 @@ class Load extends CI_Controller
 		return $list;
 	}
 
+	public function filterData($format, $dataList)
+	{
+		$this->load->library('FilterFactory');
+		$filterFactory = new FilterFactory();
+
+		switch ($format) {
+			case 'PaxCbs':
+				$filterFactory->addFiltererFactory(
+					$format,
+					function(){return new PaxCbsFilter();}
+				);
+			break;
+		}
+		$this->load->library('GenericFilter', ['flFac' => $filterFactory]);
+		$genericFilter = new GenericFilter($filterFactory);
+		$list = $genericFilter->filterToFormat($dataList, $format);
+
+		return $list;
+	}
+
+	/**
+	 * @param string $format
+	 * @param array  $dataList
+	 * @return mixed
+	 */
 	public function encodeData($format, $dataList)
 	{
 		$this->load->library('EncoderFactory');
@@ -126,6 +162,5 @@ class Load extends CI_Controller
 		$list = $genericEncoder->encodeToFormat($dataList, $format);
 
 		return $list;
-
 	}
 }
