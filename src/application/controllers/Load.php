@@ -9,7 +9,7 @@ require_once LIBRARIES.'Filter/FilterInterface.php';
 require_once LIBRARIES.'Filter/PaxCbsFilter.php';
 /**
  * Created by PhpStorm.
- * User: wis
+ * User: EU-maritime/PaxListConverter
  * Date: 21/07/16
  * Time: 14:08
  */

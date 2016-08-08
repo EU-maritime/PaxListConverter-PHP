@@ -3,7 +3,7 @@ require_once LIBRARIES.'Decoder/DecoderInterface.php';
 
 /**
  * Created by PhpStorm.
- * User: wis
+ * User: EU-maritime/PaxListConverter
  * Date: 22/07/16
  * Time: 13:33
  */
