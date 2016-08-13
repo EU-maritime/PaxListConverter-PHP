@@ -16,7 +16,7 @@ class JsonEncoder implements EncoderInterface
 	{
 		$data = $this->prepareData($data);
 
-		return json_encode($data);
+		return $data;
 	}
 
 	/**
@@ -25,7 +25,8 @@ class JsonEncoder implements EncoderInterface
 	 */
 	private function prepareData($data)
 	{
-		// TODO: Implement prepareData() method.
+		$data = json_encode($data);
+		$data = str_replace('\"', '', $data);
 		return $data;
 	}
 }

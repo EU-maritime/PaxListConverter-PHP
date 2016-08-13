@@ -6,6 +6,7 @@ require_once LIBRARIES.'Decoder/CsvDecoder.php';
 require_once LIBRARIES.'Encoder/EncoderInterface.php';
 require_once LIBRARIES.'Encoder/HtmlEncoder.php';
 require_once LIBRARIES.'Encoder/XmlEncoder.php';
+require_once LIBRARIES.'Encoder/JsonEncoder.php';
 require_once LIBRARIES.'Filter/FilterInterface.php';
 require_once LIBRARIES.'Filter/PaxCbsFilter.php';
 /**
@@ -27,6 +28,7 @@ class Load extends CI_Controller
 		$data['name'] = '';
 		$data['list'] = '';
 		$data['xml']  = '';
+		$data['xmlFile'] = '';
 		$data['json'] = '';
 		$data['allowed'] = 'no';
 		//Decoder part
@@ -60,6 +62,8 @@ class Load extends CI_Controller
 		}
 		//Encoder part (HtmlEncoder)
 		if ($data['allowed'] === 'yes'){
+			$now = new DateTime('now', new DateTimeZone('UTC'));
+			$now = $now->format('Y-m-d\TH:i:s\Z');
 			$data['name'] = $dataName;
 			$data['type'] = $dataType;
 			$data['error'] = $dataError;
@@ -72,12 +76,19 @@ class Load extends CI_Controller
 			//output XML
 			$format = 'XML';
 			$dataXML = $this->encodeData($format, $dataList);
-		//	var_dump($dataXML);
 			$data['xml'] = $dataXML->saveXML();
+			//as file
+			$paxFileName = 'PaxList'.$now;
+			$nbChars = $dataXML->save('/tmp/'.$paxFileName.'.xml');
+			$data['xmlFile'] = $paxFileName.'.xml : '.$nbChars.' chars';
 
 			//output JSON
-			$data['json'] = false;
-
+			$format = 'JSON';
+			$dataJSON = $this->encodeData($format, $dataList);
+			$data['json'] = $dataJSON;
+			//as file
+			$nbChars = file_put_contents('/tmp/'.$paxFileName.'.json', $dataJSON);
+			$data['jsonFile'] = $paxFileName.'.json : '.$nbChars.' chars';
 		}
 		//show view
 		$this->load->view('load', $data);
@@ -175,6 +186,12 @@ class Load extends CI_Controller
 				$encoderFactory->addEncoderFactory(
 					$format,
 					function(){return new XmlEncoder();}
+				);
+			break;
+			case 'JSON':
+				$encoderFactory->addEncoderFactory(
+					$format,
+					function(){return new JsonEncoder();}
 				);
 		}
 		$this->load->library('GenericEncoder', ['enFac' => $encoderFactory]);

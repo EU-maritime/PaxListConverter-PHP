@@ -30,12 +30,17 @@ class TxtDecoder implements DecoderInterface
 		//read first line
 		$keyLine = fgets($handle);
 		if ($keyLine){
+			//get rid to LF and CR
+			$keyLine = str_replace(["\n", "\r"], '', $keyLine);
 			//get keys into array
 			$keys = explode("\t", $keyLine);
 			//verify keys
 		}
 		$ct = 0;
 		while ($nextLine = fgets($handle)){
+			//get rid to LF and CR
+			$nextLine = str_replace(["\n", "\r"], '', $nextLine);
+			//get data into array
 			$data = explode("\t", $nextLine);
 			$dataLine[] = array_combine($keys, $data);
 			++$ct;

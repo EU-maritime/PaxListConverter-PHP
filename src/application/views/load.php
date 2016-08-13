@@ -44,10 +44,17 @@
 			$xml2 = str_replace([$pax0, $pax1, $pax2], ['<br/>'.$pax0, '<br/>'.$pax1, $pax2.'<br/>'], $xmlhtml);
 			echo $xml2;
 			echo '<hr>';
+
+			echo '<h2>XML File:</h2>';
+			echo 'saved in file '.$xmlFile;
+			echo '<hr>';
 		}
 		if ($json) {
 			echo '<h2>JSON:</h2>';
 			echo $json;
+			echo '<hr>';
+			echo '<h2>JSON File:</h2>';
+			echo 'saved in file '.$jsonFile;
 			echo '<hr>';
 		}
 		?>

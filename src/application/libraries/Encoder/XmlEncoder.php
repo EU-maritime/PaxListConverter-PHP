@@ -32,16 +32,13 @@ class XmlEncoder implements EncoderInterface
 		$xmlRoot = $dom->appendChild($xmlRoot);
 		//other elements
 		foreach ($data as $pax){
-			echo '<br/>';
 			$paxElement = $dom->createElement('pax');
 			$paxElement = $xmlRoot->appendChild($paxElement);
 			foreach($pax as $key => $val){
-				//echo 'key : ' . $key . ' val : ' . $val.'<br/>';
 				$paxElement->appendChild($dom->createElement($key, $val));
-				//echo htmlentities($dom->saveXML());
-				//echo '<br/>';
 			}
 		}
+
 		return $dom;
 	}
 }
