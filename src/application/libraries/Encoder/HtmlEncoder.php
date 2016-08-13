@@ -25,8 +25,7 @@ class HtmlEncoder implements EncoderInterface
 	private function prepareData($data)
 	{
 		if (is_array($data)) {
-			$html = '<hr>';
-			$html .= '<table border="1">';
+			$html = '<table border="1">';
 			$header = $data[0];
 			echo '<tr>';
 			foreach ($header as $k => $v){

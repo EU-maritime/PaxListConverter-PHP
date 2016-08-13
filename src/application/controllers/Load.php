@@ -5,6 +5,7 @@ require_once LIBRARIES.'Decoder/TxtDecoder.php';
 require_once LIBRARIES.'Decoder/CsvDecoder.php';
 require_once LIBRARIES.'Encoder/EncoderInterface.php';
 require_once LIBRARIES.'Encoder/HtmlEncoder.php';
+require_once LIBRARIES.'Encoder/XmlEncoder.php';
 require_once LIBRARIES.'Filter/FilterInterface.php';
 require_once LIBRARIES.'Filter/PaxCbsFilter.php';
 /**
@@ -25,6 +26,8 @@ class Load extends CI_Controller
 	{
 		$data['name'] = '';
 		$data['list'] = '';
+		$data['xml']  = '';
+		$data['json'] = '';
 		$data['allowed'] = 'no';
 		//Decoder part
 		if ($_FILES) {
@@ -57,16 +60,28 @@ class Load extends CI_Controller
 		}
 		//Encoder part (HtmlEncoder)
 		if ($data['allowed'] === 'yes'){
-			$format = 'HTML';
-			$dataHtml = $this->encodeData($format, $dataList);
-
 			$data['name'] = $dataName;
 			$data['type'] = $dataType;
 			$data['error'] = $dataError;
 			$data['size'] = $dataSize;
-			$data['list'] = $dataHtml;
+			//output HTML
+			$format = 'HTML';
+			$dataHTML = $this->encodeData($format, $dataList);
+			$data['list'] = $dataHTML;
+
+			//output XML
+			$format = 'XML';
+			$dataXML = $this->encodeData($format, $dataList);
+		//	var_dump($dataXML);
+			$data['xml'] = $dataXML->saveXML();
+
+			//output JSON
+			$data['json'] = false;
+
 		}
+		//show view
 		$this->load->view('load', $data);
+
 	}
 
 	/**
@@ -156,6 +171,11 @@ class Load extends CI_Controller
 					function(){return new HtmlEncoder();}
 				);
 			break;
+			case 'XML':
+				$encoderFactory->addEncoderFactory(
+					$format,
+					function(){return new XmlEncoder();}
+				);
 		}
 		$this->load->library('GenericEncoder', ['enFac' => $encoderFactory]);
 		$genericEncoder = new GenericEncoder($encoderFactory);

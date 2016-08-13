@@ -28,8 +28,28 @@
 			echo '<tr><td>size</td><td>'.$size.'</td>'.'</tr>';
 			echo '<tr><td>allowed</td><td>'.$allowed.'</td>'.'</tr>';
 			echo '</table>';
+			echo '<hr>';
 		}
+		if ($list) {
+			echo '<h2>HTML:</h2>';
 			echo $list;
+			echo '<hr>';
+		}
+		if ($xml) {
+			echo '<h2>XML:</h2>';
+			$xmlhtml = htmlentities($xml);
+			$pax0 = htmlentities('<Passengers>');
+			$pax1 = htmlentities('<pax>');
+			$pax2 = htmlentities('</pax>');
+			$xml2 = str_replace([$pax0, $pax1, $pax2], ['<br/>'.$pax0, '<br/>'.$pax1, $pax2.'<br/>'], $xmlhtml);
+			echo $xml2;
+			echo '<hr>';
+		}
+		if ($json) {
+			echo '<h2>JSON:</h2>';
+			echo $json;
+			echo '<hr>';
+		}
 		?>
 	</body>
 </html>
