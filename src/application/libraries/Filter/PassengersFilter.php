@@ -6,7 +6,7 @@
  * Date: 22/07/16
  * Time: 13:32
  */
-class PaxCbsFilter implements FilterInterface
+class PassengersFilter implements FilterInterface
 {
 	public $fields;
 	public $dateFormats;
@@ -38,12 +38,12 @@ class PaxCbsFilter implements FilterInterface
 			'EXCEL'      => 'EXCEL',
 		];
 	}
-/*
+
 	/**
-	 * @param $data
-	 * @return mixed
+	 * @param array $data
+	 * @return array
 	 */
-	public function filter ($data)
+	public function filter (array $data)
 	{
 		//read first line
 		$firstLine = $data[0];
@@ -62,11 +62,13 @@ class PaxCbsFilter implements FilterInterface
 		return array_merge($filteredC, $filteredP);
 	}
 
+
 	/**
-	 * @param $data
-	 * @return mixed
+	 * @param string $cat
+	 * @param array of dict $data
+	 * @return array
 	 */
-	private function prepareData($cat, $data)
+	private function prepareData(/* string */$cat, array $data)
 	{
 		$dataOut = [];
 		foreach ($data as $row){
@@ -102,7 +104,11 @@ class PaxCbsFilter implements FilterInterface
 		return $dataOut;
 	}
 
-	private function getFieldsFor($cat)
+	/**
+	 * @param string $cat
+	 * @return array
+	 */
+	private function getFieldsFor(/* string */$cat)
 	{
 		$fields = [];
 		foreach ($this->fields as $k => $v){
@@ -114,6 +120,12 @@ class PaxCbsFilter implements FilterInterface
 		return $fields;
 	}
 
+	/**
+	 * @param string $cat
+	 * @param string $firstLine
+	 * @param &array $foundFormat
+	 * @return array
+	 */
 	private function findMissingFields($cat, $firstLine, &$foundFormat)
 	{
 		$mandatory = $this->getFieldsFor($cat);
@@ -130,14 +142,6 @@ class PaxCbsFilter implements FilterInterface
 		asort($keys);
 		asort($mandatory);
 		$result = array_diff($mandatory, $keys);
-		/*		echo 'mandatory<br/>';
-				print_r($mandatory);
-				echo '<br/>keys<br/>';
-				print_r($keys);
-				echo '<hr>';
-				echo 'diff<br/>';
-				print_r($result);
-		*/
 		return $result;
 	}
 }

@@ -25,7 +25,7 @@ class CsvDecoder implements DecoderInterface
 	 */
 	private function prepareData($dataFile)
 	{
-		$dataLine = '';
+		$dataLine = [];
 		$handle = fopen($dataFile, 'rt');
 		if ($handle) {
 			$dataLine = [];

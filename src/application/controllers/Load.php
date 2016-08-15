@@ -8,7 +8,7 @@ require_once LIBRARIES.'Encoder/HtmlEncoder.php';
 require_once LIBRARIES.'Encoder/XmlEncoder.php';
 require_once LIBRARIES.'Encoder/JsonEncoder.php';
 require_once LIBRARIES.'Filter/FilterInterface.php';
-require_once LIBRARIES.'Filter/PaxCbsFilter.php';
+require_once LIBRARIES.'Filter/PassengersFilter.php';
 /**
  * Created by PhpStorm.
  * User: EU-maritime/PaxListConverter
@@ -33,7 +33,6 @@ class Load extends CI_Controller
 		$data['allowed'] = 'no';
 		//Decoder part
 		if ($_FILES) {
-			//print_r($_FILES);
 			echo '<hr>';
 			$filedata = $_FILES['filedata'];
 			$dataName = $filedata['name'];
@@ -55,9 +54,9 @@ class Load extends CI_Controller
 				}
 			}
 		}
-		//Filter part (PaxCbsFilter)
+		//Filter part (PassengersFilter)
 		if ($data['allowed'] === 'yes'){
-			$format = 'PaxCbs';
+			$format = 'Pax';
 			$dataList = $this->filterData($format, $dataList);
 		}
 		//Encoder part (HtmlEncoder)
@@ -151,10 +150,10 @@ class Load extends CI_Controller
 		$filterFactory = new FilterFactory();
 
 		switch ($format) {
-			case 'PaxCbs':
+			case 'Pax':
 				$filterFactory->addFiltererFactory(
 					$format,
-					function(){return new PaxCbsFilter();}
+					function(){return new PassengersFilter();}
 				);
 			break;
 		}

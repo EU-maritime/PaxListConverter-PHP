@@ -9,8 +9,8 @@
 interface FilterInterface
 {
 	/**
-	 * @param array $data
-	 * @return array
+	 * @param $data
+	 * @return mixed
 	 */
-	public function filter(array $data);
+	public function filter($data);
 }

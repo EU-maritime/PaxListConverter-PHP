@@ -6,11 +6,11 @@
  * Date: 22/07/16
  * Time: 13:31
  */
-interface FilterInterface
+interface EncoderInterface
 {
 	/**
-	 * @param array $data
-	 * @return array
+	 * @param $data
+	 * @return mixed
 	 */
-	public function filter(array $data);
+	public function encode($data);
 }
