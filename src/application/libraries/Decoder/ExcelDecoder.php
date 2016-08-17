@@ -12,7 +12,7 @@ class ExcelDecoder implements DecoderInterface
 	public function __construct($excelVersion)
 	{
 		$this->excelVersion = $excelVersion;
-		$this->excelFirst = '1900-01-01';
+		$this->excelFirst = '1904-01-01';
 	}
 
 	/**
