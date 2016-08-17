@@ -1,3 +1,0 @@
-FirstName	LastName	CPS	RankOrRating	TypeOfID	serialnrID	serialNrVisa	ExpDate_YYYY-MM-DD	BirthDate_YYYY-MM-DD	CityOfBirth
-Stephane	Winnepenninckx	P		ID	123456789		2016-08-18	1957-02-28	Brussels
-Felix	DARTAGNAN	C	Captain	ID	987654321		2017-08-28	1995-05-05	Leuven
