@@ -1,7 +1,5 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
 * Quick summary
@@ -9,11 +7,9 @@ How to accept different formats of data in different type of documents? Here is 
 
 * Version
 v1.0.0
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
-
-* The pdf is explaining the why and how.
+* The pdf is explaining everything.
 
 ### Contribution guidelines ###
 
