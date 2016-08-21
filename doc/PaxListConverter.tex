@@ -387,15 +387,18 @@ class JsonEncoder implements EncoderInterface
 PHP is so kind to do nearly the whole job ;-)
 \section{Putting everything together}
 The \texttt{Load} class is the main thing, it is a \texttt{CI\textunderscore Controller} class from CodeIgniter 3.0.6. Since it takes over the 200 lines of code, I want to highlight only some part of it. The complete code is available, you'll have it all.
+\subsection{\texttt{Load}}
+To do
+\subsection{Installation}
 How to call the stuff from your browser.
 \begin{itemize}
 \item Install PHP (\textgreater= 5.4).
 \item Install CodeIgniter (\textgreater = 3.0.6).
-\item Run composer to get the package PHPOffice/phpExcel.
+\item Run composer to get the package \texttt{phpoffice/phpexcel}.
 \item Install all the code included here.
 \item if you don't have a HTTP server type on the command line:
 
- \texttt{php -S localhost:8080 path\textunderscore to\textunderscore  index.php}
+\texttt{php -S localhost:8080 path\textunderscore to\textunderscore  index.php}
 \item in your browser : localhost:8080/PaxListConverter/Load.
 \item you should see something like the figure ~\ref{fig:before}.
 \item Choose a file from the folder \texttt{doc}.
