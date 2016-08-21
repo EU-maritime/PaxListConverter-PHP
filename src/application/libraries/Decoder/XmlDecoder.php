@@ -15,19 +15,26 @@ class XmlDecoder implements DecoderInterface
 	public function decode ($data)
 	{
 		$data = $this->prepareData($data);
-		//TODO encode xml
-		$xml = $data; //fake
-
-		return $xml;
+		return $data;
 	}
 
 	/**
 	 * @param $data
 	 * @return mixed
 	 */
-	private function prepareData($data)
+	private function prepareData($dataFile)
 	{
-		// TODO: Implement prepareData() method.
+		$data = [];
+		$xml = simplexml_load_file($dataFile);
+		$paxArray = $xml->pax;
+		foreach($paxArray as $row) {
+			foreach($row as $k => $v) {
+				$line[$k] = $v;
+			}
+			$data[] = $line;
+			unset($line);
+		}
+
 		return $data;
 	}
 }

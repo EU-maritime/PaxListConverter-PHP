@@ -4,6 +4,7 @@ require_once LIBRARIES.'Decoder/ExcelDecoder.php';
 require_once LIBRARIES.'Decoder/TxtDecoder.php';
 require_once LIBRARIES.'Decoder/CsvDecoder.php';
 require_once LIBRARIES.'Decoder/JsonDecoder.php';
+require_once LIBRARIES.'Decoder/XmlDecoder.php';
 require_once LIBRARIES.'Encoder/EncoderInterface.php';
 require_once LIBRARIES.'Encoder/HtmlEncoder.php';
 require_once LIBRARIES.'Encoder/XmlEncoder.php';
@@ -48,6 +49,7 @@ class Load extends CI_Controller
 					case 'application/vnd.ms-excel': //excel old Excel5
 					case 'application/json': // jason text file
 					case 'text/csv': //comma separated
+					case 'text/xml': //xml in a text file
 						$data['allowed'] = 'yes';
 						$dataList = $this->decodeData($filedata['tmp_name'], $dataType);
 					break;
@@ -141,7 +143,13 @@ class Load extends CI_Controller
 					function(){return new CsvDecoder();}
 				);
 			break;
-			default:
+			case 'text/xml': //comma separated value
+				$format = 'Xml';
+				$decoderFactory->addDecoderFactory(
+					$format,
+					function(){return new XmlDecoder();}
+				);
+			break;			default:
 				log_message('INFO', 'Unsupported format: '.$fileFormat);
 				return;
 		}

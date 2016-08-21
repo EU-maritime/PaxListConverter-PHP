@@ -15,7 +15,6 @@ class JsonDecoder implements DecoderInterface
 	public function decode($data)
 	{
 		$rtn = $this->prepareData($data);
-
 		return $rtn;
 	}
 
