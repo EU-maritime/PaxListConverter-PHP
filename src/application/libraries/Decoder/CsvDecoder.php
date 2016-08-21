@@ -28,7 +28,6 @@ class CsvDecoder implements DecoderInterface
 		$dataLine = [];
 		$handle = fopen($dataFile, 'rt');
 		if ($handle) {
-			$dataLine = [];
 			//read first line
 			$keys = fgetcsv($handle);
 			if ($keys) {

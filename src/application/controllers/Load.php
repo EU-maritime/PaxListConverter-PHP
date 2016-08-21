@@ -3,6 +3,7 @@ require_once LIBRARIES.'Decoder/DecoderInterface.php';
 require_once LIBRARIES.'Decoder/ExcelDecoder.php';
 require_once LIBRARIES.'Decoder/TxtDecoder.php';
 require_once LIBRARIES.'Decoder/CsvDecoder.php';
+require_once LIBRARIES.'Decoder/JsonDecoder.php';
 require_once LIBRARIES.'Encoder/EncoderInterface.php';
 require_once LIBRARIES.'Encoder/HtmlEncoder.php';
 require_once LIBRARIES.'Encoder/XmlEncoder.php';
@@ -45,6 +46,7 @@ class Load extends CI_Controller
 					case 'text/plain': //tab separated
 					case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'://excel new
 					case 'application/vnd.ms-excel': //excel old Excel5
+					case 'application/json': // jason text file
 					case 'text/csv': //comma separated
 						$data['allowed'] = 'yes';
 						$dataList = $this->decodeData($filedata['tmp_name'], $dataType);
@@ -118,6 +120,13 @@ class Load extends CI_Controller
 					function(){return new ExcelDecoder('Excel2007');}
 				);
 			break;
+			case 'application/json':
+				$format = 'Json';
+				$decoderFactory->addDecoderFactory(
+					$format,
+					function(){return new JsonDecoder('Json');}
+				);
+			break;
 			case 'text/plain': //tab separated
 				$format = 'Txt';
 				$decoderFactory->addDecoderFactory(
@@ -144,6 +153,11 @@ class Load extends CI_Controller
 		return $list;
 	}
 
+	/**
+	 * @param string $format
+	 * @param array $dataList
+	 * @return mixed
+	 */
 	public function filterData($format, $dataList)
 	{
 		$this->load->library('FilterFactory');

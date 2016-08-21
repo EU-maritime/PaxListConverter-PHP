@@ -9,23 +9,25 @@
 class JsonDecoder implements DecoderInterface
 {
 	/**
-	 * @param $data
+	 * @param $data the file to be read
 	 * @return stdClass|null
 	 */
 	public function decode($data)
 	{
-		$data = $this->prepareData($data);
+		$rtn = $this->prepareData($data);
 
-		return json_decode($data);
+		return $rtn;
 	}
 
 	/**
 	 * @param $data
 	 * @return mixed
 	 */
-	private function prepareData($data)
+	private function prepareData($dataFile)
 	{
-		// TODO: Implement prepareData() method.
-		return $data;
+		$contents = file_get_contents($dataFile);
+		$rtn = json_decode($contents, true);
+
+		return $rtn;
 	}
 }
