@@ -41,7 +41,7 @@
 			$pax0 = htmlentities('<Passengers>');
 			$pax1 = htmlentities('<pax>');
 			$pax2 = htmlentities('</pax>');
-			$xml2 = str_replace([$pax0, $pax1, $pax2], ['<br/>'.$pax0, '<br/>'.$pax1, $pax2.'<br/>'], $xmlhtml);
+			$xml2 = str_replace([$pax0, $pax1, $pax2], ['</br>'.$pax0.'</br>', $pax1, $pax2.'</br>'], $xmlhtml);
 			echo $xml2;
 			echo '<hr>';
 
