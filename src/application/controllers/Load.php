@@ -154,7 +154,7 @@ class Load extends CI_Controller
 				return;
 		}
 
-		$this->load->library('GenericDecoder', ['deFac' => $decoderFactory]);
+		$this->load->library('Decoder/GenericDecoder', ['deFac' => $decoderFactory]);
 		$genericDecoder = new GenericDecoder($decoderFactory);
 		$list = $genericDecoder->decodeToFormat($file, $format);
 
@@ -179,7 +179,7 @@ class Load extends CI_Controller
 				);
 			break;
 		}
-		$this->load->library('GenericFilter', ['flFac' => $filterFactory]);
+		$this->load->library('Filter/GenericFilter', ['flFac' => $filterFactory]);
 		$genericFilter = new GenericFilter($filterFactory);
 		$list = $genericFilter->filterToFormat($dataList, $format);
 
@@ -215,7 +215,7 @@ class Load extends CI_Controller
 					function(){return new JsonEncoder();}
 				);
 		}
-		$this->load->library('GenericEncoder', ['enFac' => $encoderFactory]);
+		$this->load->library('Encoder/GenericEncoder', ['enFac' => $encoderFactory]);
 		$genericEncoder = new GenericEncoder($encoderFactory);
 		$list = $genericEncoder->encodeToFormat($dataList, $format);
 
