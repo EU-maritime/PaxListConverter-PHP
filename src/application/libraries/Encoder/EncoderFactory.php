@@ -1,12 +1,12 @@
 <?php
-require_once 'Filter/FilterFactoryInterface.php';
+require_once 'EncoderFactoryInterface.php';
 /**
  * Created by PhpStorm.
  * User: EU-maritime/PaxListConverter
  * Date: 22/07/16
  * Time: 13:35
  */
-class FilterFactory implements FilterFactoryInterface
+class EncoderFactory implements EncoderFactoryInterface
 {
 	private $factories = [];
 
@@ -16,7 +16,7 @@ class FilterFactory implements FilterFactoryInterface
 	 * @param string   $format
 	 * @param callable $factory
 	 */
-	public function addFiltererFactory($format, callable $factory)
+	public function addEncoderFactory($format, callable $factory)
 	{
 		$this->factories[$format] = $factory;
 	}

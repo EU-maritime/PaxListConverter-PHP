@@ -105,7 +105,7 @@ class Load extends CI_Controller
 	 */
 	public function decodeData($file, $fileFormat)
 	{
-		$this->load->library('DecoderFactory');
+		$this->load->library('Decoder/DecoderFactory');
 		$decoderFactory = new DecoderFactory();
 		switch ($fileFormat){
 			case 'application/vnd.ms-excel': //excel old Excel5
@@ -168,7 +168,7 @@ class Load extends CI_Controller
 	 */
 	public function filterData($format, $dataList)
 	{
-		$this->load->library('FilterFactory');
+		$this->load->library('Filter/FilterFactory');
 		$filterFactory = new FilterFactory();
 
 		switch ($format) {
@@ -193,7 +193,7 @@ class Load extends CI_Controller
 	 */
 	public function encodeData($format, $dataList)
 	{
-		$this->load->library('EncoderFactory');
+		$this->load->library('Encoder/EncoderFactory');
 		$encoderFactory = new EncoderFactory();
 
 		switch ($format) {

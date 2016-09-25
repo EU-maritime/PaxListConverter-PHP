@@ -1,35 +1,36 @@
 <?php
-require_once 'Decoder/DecoderFactoryInterface.php';
+require_once 'FilterFactoryInterface.php';
 /**
  * Created by PhpStorm.
  * User: EU-maritime/PaxListConverter
  * Date: 22/07/16
  * Time: 13:35
  */
-class DecoderFactory implements DecoderFactoryInterface
+class FilterFactory implements FilterFactoryInterface
 {
 	private $factories = [];
 
 	/**
-	 * Register a callable that returns an instance of DecoderInterface for the given format
+	 * Register a callable that returns an instance of EncoderInterface for the given format
+	 *
 	 * @param string   $format
 	 * @param callable $factory
 	 */
-	public function addDecoderFactory($format, callable $factory)
+	public function addFiltererFactory($format, callable $factory)
 	{
 		$this->factories[$format] = $factory;
 	}
 
 	/**
 	 * @param string $format
-	 * @return DecoderInterface concrete Class defined by $format
+	 * @return EncoderInterface concrete Class defined by $format
 	 */
 	public function createForFormat ($format)
 	{
 		$factory = $this->factories[$format];
-		$decoder = $factory();
+		$encoder = $factory();
 
-		return $decoder;
+		return $encoder;
 	}
 
 	public function test()
