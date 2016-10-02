@@ -10,7 +10,7 @@
  */
 
 /**
- * PHP Version 5
+ * The Decoder for XML
  *
  * @category Decoder
  * @package  PaxListConverter

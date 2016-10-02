@@ -11,7 +11,7 @@
  */
 
 /**
- *The Decoder Interface
+ * The Decoder Interface
  *
  * @category Decoder
  * @package  PaxListConverter

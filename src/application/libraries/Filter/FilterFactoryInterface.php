@@ -1,19 +1,31 @@
 <?php
+/**
+ * PHP Version 5
+ *
+ * @category Filter
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
+ */
 
 /**
- * Created by PhpStorm.
- * User: EU-maritime/PaxListConverter
- * Date: 22/07/16
- * Time: 13:34
+ * The Interface for the Filter Factory
+ *
+ * @category Filter
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 interface FilterFactoryInterface
 {
-	/**
-	 * Create a filter for the given format
-	 *
-	 * @param string $format
-	 * @return FilterInterface concrete Class defined by $format
-	 */
-
-	public function createForFormat($format);
+    /**
+     * Create a filter for the given format
+     *
+     * @param string $format : the name of the Filter
+     *
+     * @return FilterInterface concrete Class defined by $format
+     */
+    public function createForFormat($format);
 }
