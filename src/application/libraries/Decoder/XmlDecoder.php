@@ -1,40 +1,58 @@
 <?php
+/**
+ * PHP Version 5
+ *
+ * @category Decoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
+ */
 
 /**
- * Created by PhpStorm.
- * User: EU-maritime/PaxListConverter
- * Date: 22/07/16
- * Time: 13:32
+ * PHP Version 5
+ *
+ * @category Decoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 class XmlDecoder implements DecoderInterface
 {
-	/**
-	 * @param $data
-	 * @return mixed
-	 */
-	public function decode ($data)
-	{
-		$data = $this->prepareData($data);
-		return $data;
-	}
+    /**
+     * The concrete function for decoding
+     *
+     * @param array $data : the content of the Pax List
+     *
+     * @return stdClass|null
+     */
+    public function decode($data)
+    {
+        $data = $this->prepareData($data);
+        return $data;
+    }
 
-	/**
-	 * @param $data
-	 * @return mixed
-	 */
-	private function prepareData($dataFile)
-	{
-		$data = [];
-		$xml = simplexml_load_file($dataFile);
-		$paxArray = $xml->pax;
-		foreach($paxArray as $row) {
-			foreach($row as $k => $v) {
-				$line[$k] = $v;
-			}
-			$data[] = $line;
-			unset($line);
-		}
+    /**
+     * Preparing the content
+     *
+     * @param string $dataFile : the file to be read and decoded
+     *
+     * @return mixed
+     */
+    protected function prepareData($dataFile)
+    {
+        $data = [];
+        $xml = simplexml_load_file($dataFile);
+        $paxArray = $xml->pax;
+        foreach ($paxArray as $row) {
+            foreach ($row as $k => $v) {
+                $line[$k] = $v;
+            }
+            $data[] = $line;
+            unset($line);
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 }

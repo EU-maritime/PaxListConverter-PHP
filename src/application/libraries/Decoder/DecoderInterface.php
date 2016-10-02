@@ -1,16 +1,32 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: EU-maritime/PaxListConverter
- * Date: 22/07/16
- * Time: 13:31
+ * PHP Version 5
+ *
+ * @category Decoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
+ */
+
+/**
+ *The Decoder Interface
+ *
+ * @category Decoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 interface DecoderInterface
 {
-	/**
-	 * @param string $format
-	 * @return stdClass|null decode $data
-	 */
-	public function decode($format);
+    /**
+     * The main action of the Decoder
+     *
+     * @param string $format the name of the Decoder
+     *
+     * @return stdClass|null
+     */
+    public function decode($format);
 }

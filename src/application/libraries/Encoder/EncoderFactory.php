@@ -1,40 +1,54 @@
 <?php
-require_once 'EncoderFactoryInterface.php';
 /**
- * Created by PhpStorm.
- * User: EU-maritime/PaxListConverter
- * Date: 22/07/16
- * Time: 13:35
+ * PHP Version 5
+ *
+ * @category Encoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
+ */
+
+require_once 'EncoderFactoryInterface.php';
+
+/**
+ * The EncoderFactory
+ *
+ * @category Encoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 class EncoderFactory implements EncoderFactoryInterface
 {
-	private $factories = [];
+    protected $factories = [];
 
-	/**
-	 * Register a callable that returns an instance of EncoderInterface for the given format
-	 *
-	 * @param string   $format
-	 * @param callable $factory
-	 */
-	public function addEncoderFactory($format, callable $factory)
-	{
-		$this->factories[$format] = $factory;
-	}
+    /**
+     * Register a callable returning a EncoderInterface for the given format
+     *
+     * @param string   $format  : the name of the encoder
+     * @param callable $factory : the function to execute the encoder
+     *
+     * @return void
+     */
+    public function addEncoderFactory($format, callable $factory)
+    {
+        $this->factories[$format] = $factory;
+    }
 
-	/**
-	 * @param string $format
-	 * @return EncoderInterface concrete Class defined by $format
-	 */
-	public function createForFormat ($format)
-	{
-		$factory = $this->factories[$format];
-		$encoder = $factory();
+    /**
+     * The response of a encoder
+     *
+     * @param string $format : the name of the encoder
+     *
+     * @return EncoderInterface concrete Class defined by $format
+     */
+    public function createForFormat($format)
+    {
+        $factory = $this->factories[$format];
+        $encoder = $factory();
 
-		return $encoder;
-	}
-
-	public function test()
-	{
-		echo __METHOD__.'<br>';
-	}
+        return $encoder;
+    }
 }

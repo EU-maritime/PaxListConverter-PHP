@@ -1,17 +1,31 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: EU-maritime/PaxListConverter
- * Date: 22/07/16
- * Time: 13:34
+ * PHP Version 5
+ *
+ * @category Decoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
+ */
+
+/**
+ * The Interface for the Decoder Factory
+ *
+ * @category Decoder
+ * @package  PaxListConverter
+ * @author   stephane-wis <on5wis@mac.com>
+ * @license  MIT http://choosealicense.com/licenses/mit/
+ * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 interface DecoderFactoryInterface
 {
-	/**
-	 * Create a decoder for the given format
-	 *
-	 * @param string $format
-	 * @return DecoderInterface concrete Class defined by $format
-	 */
-	public function createForFormat($format);
+    /**
+     * Create a decoder for the given format
+     *
+     * @param string $format : the name of the Decoder
+     *
+     * @return DecoderInterface concrete Class defined by $format
+     */
+    public function createForFormat($format);
 }
