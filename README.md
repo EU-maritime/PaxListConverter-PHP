@@ -6,7 +6,7 @@
 
 A PHP development showing how to convert passengers list.
 
-How to accept different formats of data in different type of documents? Here is an example of a system using Decoder, Filter and Encode to accept a file, read the data, parse and validate the data and finally outputs the data in the file, and the form, and the sequence of your choice. All of it done, or should be done, without touching the engine.
+How to accept different formats of data in different type of documents? Here is an example of a system using Decoder, Filter and Encoder to accept a file, read the data, parse and validate the data and finally outputs the data in the file, and the form, and the sequence of your choice. All of it done, or should be done, without touching the engine.
 
 * Version
 
