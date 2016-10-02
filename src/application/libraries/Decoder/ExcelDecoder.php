@@ -9,8 +9,8 @@
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 
-require_once LIBRARIES.'Decoder/DecoderInterface.php';
 require_once VENDOR . 'phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
+
 /**
  * The Decoder for Excel files
  *

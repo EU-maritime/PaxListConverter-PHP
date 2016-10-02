@@ -8,7 +8,7 @@
  * @license  MIT http://choosealicense.com/licenses/mit/
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
-require_once LIBRARIES.'Encoder/EncoderInterface.php';
+
 /**
  * Encoder for HTML
  *

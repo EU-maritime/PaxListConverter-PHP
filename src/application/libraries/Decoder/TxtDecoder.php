@@ -9,8 +9,6 @@
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 
-require_once LIBRARIES.'Decoder/DecoderInterface.php';
-
 /**
  * The Decoder for Text file
  *
