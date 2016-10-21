@@ -1,10 +1,8 @@
 <?php
 /**
- * The Generic Decoder
- *
  * PHP Version 5
  *
- * @category Decoder
+ * @category Filter
  * @package  PaxListConverter
  * @author   stephane-wis <on5wis@mac.com>
  * @license  MIT http://choosealicense.com/licenses/mit/
@@ -12,43 +10,44 @@
  */
 
 /**
- * The Generic Decoder
+ * The Generic Filter
  *
- * @category Decoder
+ * @category Filter
  * @package  PaxListConverter
  * @author   stephane-wis <on5wis@mac.com>
  * @license  MIT http://choosealicense.com/licenses/mit/
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
-class GenericDecoder
+class GenericFilter
 {
-    protected $decoderFactory;
+    protected $filterFactory;
 
     /**
-     * GenericDecoder constructor.
+     * GenericFilter constructor.
      *
-     * @param DecoderFactory $params : the decoder factory to be used
+     * @param FilterFactory $params : the filter factory to be used
      *
      * @return void
      */
-    public function __construct(/*DecoderFactory*/ $params)
+    public function __construct(/*FilterFactory*/ $params)
     {
-        $this->decoderFactory = $params;
+        $this->filterFactory = $params;
     }
 
     /**
-     * The main action for decoding
+     * The main action for the filter
      *
      * @param string $data   : pax list
-     * @param string $format : the name of the decoder
+     * @param string $format : the name of the filter
      *
      * @return mixed
      */
-    public function decodeToFormat($data, $format)
+    public function filterToFormat($data, $format)
     {
-        $decoder = $this->decoderFactory->createForFormat($format);
-        $rtn = $decoder->decode($data);
+        $encoder = $this->filterFactory->createForFormat($format);
+        $rtn = $encoder->filter($data);
 
         return $rtn;
     }
 }
+

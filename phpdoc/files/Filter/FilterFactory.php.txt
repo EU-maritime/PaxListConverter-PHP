@@ -49,4 +49,6 @@ class FilterFactory implements FilterFactoryInterface
 
         return $encoder;
     }
+
 }
+

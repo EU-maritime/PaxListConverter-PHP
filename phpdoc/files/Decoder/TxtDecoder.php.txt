@@ -10,7 +10,7 @@
  */
 
 /**
- * The CSV deocder
+ * The Decoder for Text file
  *
  * @category Decoder
  * @package  PaxListConverter
@@ -19,12 +19,12 @@
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
 
-class CsvDecoder implements DecoderInterface
+class TxtDecoder implements DecoderInterface
 {
     /**
-     * The action to decode
+     * The concrete function for decoding
      *
-     * @param string $data : the file to be read and decoded
+     * @param array $data : the content of the Pax List
      *
      * @return stdClass|null
      */
@@ -36,7 +36,7 @@ class CsvDecoder implements DecoderInterface
     }
 
     /**
-     * A usefull function for de decoder
+     * Preparing the content
      *
      * @param string $dataFile : the file to be read and decoded
      *
@@ -44,23 +44,27 @@ class CsvDecoder implements DecoderInterface
      */
     protected function prepareData($dataFile)
     {
-        $dataLine = [];
         $handle = fopen($dataFile, 'rt');
-        if ($handle) {
-            //read first line
-            $keys = fgetcsv($handle);
-            if ($keys) {
-                //verify keys
-            }
-            $ct = 0;
-            while ($nextLine = fgetcsv($handle)) {
-                $dataLine[] = array_combine($keys, $nextLine);
-                ++$ct;
-            }
-            //create std struct
-            //return std struct
+        //read first line
+        $keyLine = fgets($handle);
+        if ($keyLine) {
+            //get rid to LF and CR
+            $keyLine = str_replace(["\n", "\r"], '', $keyLine);
+            //get keys into array
+            $keys = explode("\t", $keyLine);
+            //verify keys
+        }
+        $ct = 0;
+        while ($nextLine = fgets($handle)) {
+            //get rid to LF and CR
+            $nextLine = str_replace(["\n", "\r"], '', $nextLine);
+            //get data into array
+            $data = explode("\t", $nextLine);
+            $dataLine[] = array_combine($keys, $data);
+            ++$ct;
         }
 
         return $dataLine;
     }
 }
+

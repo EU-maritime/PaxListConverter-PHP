@@ -2,51 +2,55 @@
 /**
  * PHP Version 5
  *
- * @category Filter
+ * @category Decoder
  * @package  PaxListConverter
  * @author   stephane-wis <on5wis@mac.com>
  * @license  MIT http://choosealicense.com/licenses/mit/
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
-require_once 'FilterFactoryInterface.php';
+
+require_once 'DecoderFactoryInterface.php';
+
 /**
- * Filter Factory
+ * Decoder Factory
  *
- * @category Filter
+ * @category Decoder
  * @package  PaxListConverter
  * @author   stephane-wis <on5wis@mac.com>
  * @license  MIT http://choosealicense.com/licenses/mit/
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
-class FilterFactory implements FilterFactoryInterface
+class DecoderFactory implements DecoderFactoryInterface
 {
     protected $factories = [];
 
     /**
-     * Register a callable returning a FilterInterface for the given format
+     * Register a callable returning a DecoderInterface for the given format
      *
      * @param string   $format  : the name of the decoder
      * @param callable $factory : the function to execute the decoder
      *
      * @return void
      */
-    public function addFiltererFactory($format, callable $factory)
+    public function addDecoderFactory($format, callable $factory)
     {
         $this->factories[$format] = $factory;
     }
 
     /**
-     * The main function of the filter
+     * The main function of the decoder
      *
-     * @param string $format : the name of the filter
+     * @param string $format : the name of the decoder
      *
-     * @return FilterInterface concrete Class defined by $format
+     * @return DecoderInterface concrete Class defined by $format
      */
     public function createForFormat($format)
     {
         $factory = $this->factories[$format];
-        $encoder = $factory();
+        $decoder = $factory();
 
-        return $encoder;
+        return $decoder;
     }
+
 }
+

@@ -64,3 +64,4 @@ class CsvDecoder implements DecoderInterface
         return $dataLine;
     }
 }
+

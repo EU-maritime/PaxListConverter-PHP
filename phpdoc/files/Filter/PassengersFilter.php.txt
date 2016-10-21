@@ -109,7 +109,7 @@ class PassengersFilter implements FilterInterface
                     $fmt = $this->dateFormats[$fmt];
                     $key = substr($key, 0, $pos);
                 }
-                switch ($key) {
+                switch ($key){
                 case 'EXPDATE':
                 case 'BIRTHDATE':
                     if ($fmt == 'EXCEL') {
@@ -175,3 +175,4 @@ class PassengersFilter implements FilterInterface
         return $result;
     }
 }
+

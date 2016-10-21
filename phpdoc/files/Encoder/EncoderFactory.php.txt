@@ -2,45 +2,47 @@
 /**
  * PHP Version 5
  *
- * @category Filter
+ * @category Encoder
  * @package  PaxListConverter
  * @author   stephane-wis <on5wis@mac.com>
  * @license  MIT http://choosealicense.com/licenses/mit/
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
-require_once 'FilterFactoryInterface.php';
+
+require_once 'EncoderFactoryInterface.php';
+
 /**
- * Filter Factory
+ * The EncoderFactory
  *
- * @category Filter
+ * @category Encoder
  * @package  PaxListConverter
  * @author   stephane-wis <on5wis@mac.com>
  * @license  MIT http://choosealicense.com/licenses/mit/
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
-class FilterFactory implements FilterFactoryInterface
+class EncoderFactory implements EncoderFactoryInterface
 {
     protected $factories = [];
 
     /**
-     * Register a callable returning a FilterInterface for the given format
+     * Register a callable returning a EncoderInterface for the given format
      *
-     * @param string   $format  : the name of the decoder
-     * @param callable $factory : the function to execute the decoder
+     * @param string   $format  : the name of the encoder
+     * @param callable $factory : the function to execute the encoder
      *
      * @return void
      */
-    public function addFiltererFactory($format, callable $factory)
+    public function addEncoderFactory($format, callable $factory)
     {
         $this->factories[$format] = $factory;
     }
 
     /**
-     * The main function of the filter
+     * The response of a encoder
      *
-     * @param string $format : the name of the filter
+     * @param string $format : the name of the encoder
      *
-     * @return FilterInterface concrete Class defined by $format
+     * @return EncoderInterface concrete Class defined by $format
      */
     public function createForFormat($format)
     {
@@ -50,3 +52,4 @@ class FilterFactory implements FilterFactoryInterface
         return $encoder;
     }
 }
+

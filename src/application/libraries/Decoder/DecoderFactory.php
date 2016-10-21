@@ -51,5 +51,4 @@ class DecoderFactory implements DecoderFactoryInterface
 
         return $decoder;
     }
-
 }

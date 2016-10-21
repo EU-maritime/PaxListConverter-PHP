@@ -10,7 +10,7 @@
  */
 
 /**
- * The CSV deocder
+ * The Decoder for XML
  *
  * @category Decoder
  * @package  PaxListConverter
@@ -18,25 +18,23 @@
  * @license  MIT http://choosealicense.com/licenses/mit/
  * @link     github.com:EU-maritime/PaxListConverter-PHP
  */
-
-class CsvDecoder implements DecoderInterface
+class XmlDecoder implements DecoderInterface
 {
     /**
-     * The action to decode
+     * The concrete function for decoding
      *
-     * @param string $data : the file to be read and decoded
+     * @param array $data : the content of the Pax List
      *
      * @return stdClass|null
      */
     public function decode($data)
     {
         $data = $this->prepareData($data);
-
         return $data;
     }
 
     /**
-     * A usefull function for de decoder
+     * Preparing the content
      *
      * @param string $dataFile : the file to be read and decoded
      *
@@ -44,23 +42,18 @@ class CsvDecoder implements DecoderInterface
      */
     protected function prepareData($dataFile)
     {
-        $dataLine = [];
-        $handle = fopen($dataFile, 'rt');
-        if ($handle) {
-            //read first line
-            $keys = fgetcsv($handle);
-            if ($keys) {
-                //verify keys
+        $data = [];
+        $xml = simplexml_load_file($dataFile);
+        $paxArray = $xml->pax;
+        foreach ($paxArray as $row) {
+            foreach ($row as $k => $v) {
+                $line[$k] = $v;
             }
-            $ct = 0;
-            while ($nextLine = fgetcsv($handle)) {
-                $dataLine[] = array_combine($keys, $nextLine);
-                ++$ct;
-            }
-            //create std struct
-            //return std struct
+            $data[] = $line;
+            unset($line);
         }
 
-        return $dataLine;
+        return $data;
     }
 }
+
