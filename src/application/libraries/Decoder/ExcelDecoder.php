@@ -25,7 +25,7 @@ class ExcelDecoder implements DecoderInterface
     /**
      * ExcelDecoder constructor.
      *
-     * @param string $excelVersion : the identifier of the e-Excell version
+     * @param string $excelVersion : the identifier of the Excel version
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class ExcelDecoder implements DecoderInterface
     }
 
     /**
-     * Fixing the format of thje dates
+     * Fixing the format of the dates
      *
      * @param array $data : the content of the Pax List
      *

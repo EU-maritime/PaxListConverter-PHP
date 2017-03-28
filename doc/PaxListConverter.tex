@@ -34,12 +34,12 @@
 
 \section{The purpose}
 \head{
-Some obstacles can't be jumped and the best way to handle those is to walk around.
+Some obstacles can't be jumped over and the best way to handle those is to walk around.
 }
 
 Trying to find a unique format and hoping the rest of the world to embrace it looks like an utopia to me. I think the world uses different ways to communicate, in this particular case, the list of passengers, crew and stowaway aboard a ship to the port of call (=destination). What I will explain here is not only usable to the maritime world, it's true for all situation where a single format can't be forced.
 
-The convention (here, in this sample application) is that the data needed is a sort of table where the columns hold the different data fields and where the lines holds data of a single person. The very first line of this table hold the title of the column. The order of the columns is not (or should'nt be) irrelevant, nor the order of the lines. Mixing the passengers and the crew doesn't matter, and if it does the it is the Filters responsability.  Quite standard I believe. Here is a small list of my passengers and crew.
+The convention (here, in this sample application) is that the data needed is a sort of table where the columns hold the different data fields and where the lines holds data of a single person. The very first line of this table hold the title of the column. The order of the columns is not (or shouldn't be) irrelevant, nor the order of the lines. Mixing the passengers and the crew doesn't matter, and if it does the it is the Filters responsibility.  Quite standard I believe. Here is a small list of my passengers and crew.
 \begin{center}
 \begin{tabular}{|c|l|l|l|}
 \hline 
@@ -76,9 +76,9 @@ All the formats I support can be found in the class variable \textbf{\textdollar
 \section{The Design Pattern}
 \head{Don't reinvent the wheel.}
 
-I was largely inspired by \textbf{Mattias Noback}'s book \textbf{Principes of Package Design} publish by \textbf{LeanPub} and his excellent talk in the PHP devroom at FOSDEM 2015. You will find a lot of similarities between his book and the code here. The most important think is to apply an existent pattern, not to find new one's. So here is the implementation I made, three times: once for the \texttt{Decoder}, once for the \texttt{Filter} and finally for the \texttt{Encoder}. I will use the \texttt{Decoder} to read a file containing the \textit{PassengerList} from different file formats, I will use the \texttt{Filter} to verify, adapt, move, ... the content and finally I will output the filtered content using an \texttt{Encoder}.
+I was largely inspired by \textbf{Mattias Noback}'s book \textbf{Principes of Package Design} publish by \textbf{LeanPub} and his excellent talk in the PHP devroom at FOSDEM 2015. You will find a lot of similarities between his book and the code here. The most important thing is to apply an existent pattern rather than finding a new one. So here is the implementation I made, one for the \texttt{Decoder}, one for the \texttt{Filter} and finally one for the \texttt{Encoder}. I will use the \texttt{Decoder} to read a file containing the \textit{PassengerList} from different file formats, I will use the \texttt{Filter} to verify, adapt, move, ... the content and finally I will output the filtered content using an \texttt{Encoder}.
 
-For example I will use a \texttt{ExcelDecoder} to read a Excel sheet, compute the dates with the \texttt{Filter} and I will output the content in HTML using the \texttt{HtmlEncoder}, in Json using the \texttt{JsonDecoder} and in Xml using the \texttt{XmlDecoder}. Of course, in reality, you, probably, want to output in only one format.
+For example I could use a \texttt{ExcelDecoder} to read a Excel sheet, compute the dates with the \texttt{Filter} and I could output the content in HTML using the \texttt{HtmlEncoder}, in Json using the \texttt{JsonEncoder} and in Xml using the \texttt{XmlEncoder}. Of course, in reality, you, probably, want to output in only one format.
 
 The files needed to implement the Decoder part are:
 \begin{itemize}
@@ -434,6 +434,13 @@ Once you click \texttt{Upload File} you get this figure with:
 This is much more than an invitation to collaborate. This is only a starter. There is much more to do, and we will do it altogether. We are looking, not only, for more Decoder, Filters and Encoder: we are also looking for people able to translate to other programming languages like Java, C++, Python, Objective-C, ... Let us publish our work, your work in order to avoid to reinvent the wheel. 
 
 Make Europe a better place to live, make the Earth a better place to live.
+\subsection{Document history}
+\begin{itemize}
+\item August 15th, 2016 : first version
+\item March 19th, 2017 : review of the documentation
+\item April 2017 : implementation for Belgium, unpublished yet 
+
+\end{itemize}
 \end{document}
 
 
