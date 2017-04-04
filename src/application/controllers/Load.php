@@ -39,6 +39,7 @@ class Load extends CI_Controller
      */
     public function __construct()
     {
+        log_message('info', ' entering '.__METHOD__);
         parent::__construct();
     }
 
@@ -49,6 +50,7 @@ class Load extends CI_Controller
      */
     public function index()
     {
+        log_message('info', ' entering '.__METHOD__);
         $data['name'] = '';
         $data['list'] = '';
         $data['xml']  = '';
@@ -69,9 +71,10 @@ class Load extends CI_Controller
                 case 'text/plain': //tab separated
                 case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'://excel new
                 case 'application/vnd.ms-excel': //excel old Excel5
-                case 'application/json': // jason text file
+                case 'application/json': // json text file
                 case 'text/csv': //comma separated
                 case 'text/xml': //xml in a text file
+                case 'application/octet-stream': //generic
                     $data['allowed'] = 'yes';
                     $dataList = $this->decodeData($filedata['tmp_name'], $dataType);
                     break;
@@ -85,6 +88,7 @@ class Load extends CI_Controller
             $format = 'Pax';
             $dataList = $this->filterData($format, $dataList);
         }
+
         //Encoder part (HtmlEncoder)
         if ($data['allowed'] === 'yes') {
             $now = new DateTime('now', new DateTimeZone('UTC'));
@@ -114,6 +118,7 @@ class Load extends CI_Controller
             //as file
             $nbChars = file_put_contents('/tmp/'.$paxFileName.'.json', $dataJSON);
             $data['jsonFile'] = $paxFileName.'.json : '.$nbChars.' chars';
+
         }
         //show view
         $this->load->view('load', $data);
@@ -130,64 +135,66 @@ class Load extends CI_Controller
      */
     public function decodeData($file, $fileFormat)
     {
+        log_message('info', ' entering '.__METHOD__.' for: '.$fileFormat);
         $this->load->library('Decoder/DecoderFactory');
         $decoderFactory = new DecoderFactory();
-        switch ($fileFormat){
-        case 'application/vnd.ms-excel': //excel old Excel5
-            $format = 'Excel5';
-            $decoderFactory->addDecoderFactory(
-                $format,
-                function () {
-                    return new ExcelDecoder('Excel5');
-                }
-            );
-            break;
-        case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-            $format = 'Excel2007';
-            $decoderFactory->addDecoderFactory(
-                $format,
-                function () {
-                    return new ExcelDecoder('Excel2007');
-                }
-            );
-            break;
-        case 'application/json':
-            $format = 'Json';
-            $decoderFactory->addDecoderFactory(
-                $format,
-                function () {
-                    return new JsonDecoder('Json');
-                }
-            );
-            break;
-        case 'text/plain': //tab separated
-            $format = 'Txt';
-            $decoderFactory->addDecoderFactory(
-                $format,
-                function () {
-                    return new TxtDecoder();
-                }
-            );
-            break;
-        case 'text/csv': //comma separated value
-            $format = 'Csv';
-            $decoderFactory->addDecoderFactory(
-                $format,
-                function () {
-                    return new CsvDecoder();
-                }
-            );
-            break;
-        case 'text/xml': //comma separated value
-            $format = 'Xml';
-            $decoderFactory->addDecoderFactory(
-                $format,
-                function () {
-                    return new XmlDecoder();
-                }
-            );
-            break;            default:
-             log_message('INFO', 'Unsupported format: '.$fileFormat);
+        switch ($fileFormat) {
+            case 'application/vnd.ms-excel': //excel old Excel5
+                $format = 'Excel5';
+                $decoderFactory->addDecoderFactory(
+                    $format,
+                    function () {
+                        return new ExcelDecoder('Excel5');
+                    }
+                );
+                break;
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                $format = 'Excel2007';
+                $decoderFactory->addDecoderFactory(
+                    $format,
+                    function () {
+                        return new ExcelDecoder('Excel2007');
+                    }
+                );
+                break;
+            case 'application/json':
+                $format = 'Json';
+                $decoderFactory->addDecoderFactory(
+                    $format,
+                    function () {
+                        return new JsonDecoder('Json');
+                    }
+                );
+                break;
+            case 'text/plain': //tab separated
+                $format = 'Txt';
+                $decoderFactory->addDecoderFactory(
+                    $format,
+                    function () {
+                        return new TxtDecoder();
+                    }
+                );
+                break;
+            case 'text/csv': //comma separated value
+                $format = 'Csv';
+                $decoderFactory->addDecoderFactory(
+                    $format,
+                    function () {
+                        return new CsvDecoder();
+                    }
+                );
+                break;
+            case 'text/xml': //comma separated value
+                $format = 'Xml';
+                $decoderFactory->addDecoderFactory(
+                    $format,
+                    function () {
+                        return new XmlDecoder();
+                    }
+                );
+                break;
+           default:
+                log_message('INFO', 'Unsupported format: '.$fileFormat);
                 return;
         }
 
@@ -208,15 +215,16 @@ class Load extends CI_Controller
      */
     public function filterData($format, $dataList)
     {
+        log_message('info', ' entering '.__METHOD__);
         $this->load->library('Filter/FilterFactory');
         $filterFactory = new FilterFactory();
 
         switch ($format) {
         case 'Pax':
-            $filterFactory->addFiltererFactory(
+            $filterFactory->addFilterFactory(
                 $format,
                 function () {
-                    return new PassengersFilter();
+                    return new PassengersFilter($dataList);
                 }
             );
             break;
@@ -238,6 +246,7 @@ class Load extends CI_Controller
      */
     public function encodeData($format, $dataList)
     {
+        log_message('info', ' entering '.__METHOD__);
         $this->load->library('Encoder/EncoderFactory');
         $encoderFactory = new EncoderFactory();
 

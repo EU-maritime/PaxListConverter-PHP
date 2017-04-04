@@ -32,7 +32,14 @@ class ExcelDecoder implements DecoderInterface
     public function __construct($excelVersion)
     {
         $this->excelVersion = $excelVersion;
-        $this->excelFirst = '1904-01-01';
+        $basedate = PHPExcel_Shared_Date::getExcelCalendar();
+        switch ($basedate) {
+            case PHPExcel_Shared_Date::CALENDAR_WINDOWS_1900:
+                $this->excelFirst = '1900-01-01'; // Day 1 (day after day 'zero')
+                break;
+            case PHPExcel_Shared_Date::CALENDAR_MAC_1904:
+                $this->excelFirst = '1904-01-02'; // Day 1 (day after day 'zero')
+        }
     }
 
     /**
@@ -78,9 +85,10 @@ class ExcelDecoder implements DecoderInterface
     public function convertDate($exceldate)
     {
         //get date of first excel date:
-        $firstDate = new DateTime($this->excelFirst);
+        $firstDate = new DateTime($this->excelFirst); // Day 1
         //add $exceldate days to first excel date
-        $firstDate->add(new DateInterval('P'.$exceldate.'D'));
+        $nbDaysAfterDayOne = $exceldate - 1; // relative to Day 1 (not date 'zero')
+        $firstDate->add(new DateInterval('P'.$nbDaysAfterDayOne.'D'));
         //return YYYY-MM-DD datum
         $rtn = $firstDate->format('Y-m-d');
 

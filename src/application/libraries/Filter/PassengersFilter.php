@@ -96,8 +96,10 @@ class PassengersFilter implements FilterInterface
     {
         $dataOut = [];
         foreach ($data as $row) {
-            if ($row['CPS'] != $cat) {
-                continue;
+            if (is_array($row) && array_key_exists('CPS', $row)) {
+                if ($row['CPS'] != $cat) {
+                    continue;
+                }
             }
 
             $rowOut = [];

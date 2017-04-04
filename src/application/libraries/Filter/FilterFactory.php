@@ -30,7 +30,7 @@ class FilterFactory implements FilterFactoryInterface
      *
      * @return void
      */
-    public function addFiltererFactory($format, callable $factory)
+    public function addFilterFactory($format, callable $factory)
     {
         $this->factories[$format] = $factory;
     }
