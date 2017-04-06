@@ -42,7 +42,7 @@ class GenericDecoder
      * @param string $data   : pax list
      * @param string $format : the name of the decoder
      *
-     * @return mixed
+     * @return array|null
      */
     public function decodeToFormat($data, $format)
     {

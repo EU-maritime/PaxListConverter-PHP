@@ -32,14 +32,7 @@ class ExcelDecoder implements DecoderInterface
     public function __construct($excelVersion)
     {
         $this->excelVersion = $excelVersion;
-        $basedate = PHPExcel_Shared_Date::getExcelCalendar();
-        switch ($basedate) {
-            case PHPExcel_Shared_Date::CALENDAR_WINDOWS_1900:
-                $this->excelFirst = '1900-01-01'; // Day 1 (day after day 'zero')
-                break;
-            case PHPExcel_Shared_Date::CALENDAR_MAC_1904:
-                $this->excelFirst = '1904-01-02'; // Day 1 (day after day 'zero')
-        }
+
     }
 
     /**
@@ -110,6 +103,16 @@ class ExcelDecoder implements DecoderInterface
         $objReader = PHPExcel_IOFactory::createReader($this->excelVersion);
         $objPHPExcel = $objReader->load($data);
         if ($objPHPExcel) {
+            //set date format after successful load
+            $basedate = PHPExcel_Shared_Date::getExcelCalendar();
+            switch ($basedate) {
+                case PHPExcel_Shared_Date::CALENDAR_WINDOWS_1900:
+                    $this->excelFirst = '1900-01-01'; // Day 1 (day after day 'zero')
+                    break;
+                case PHPExcel_Shared_Date::CALENDAR_MAC_1904:
+                    $this->excelFirst = '1904-01-02'; // Day 1 (day after day 'zero')
+                    break;
+            }
             foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
                 foreach ($worksheet->getRowIterator() as $row) {
                     $rowIdx = $row->getRowIndex();

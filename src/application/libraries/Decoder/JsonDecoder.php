@@ -39,12 +39,12 @@ class JsonDecoder implements DecoderInterface
      *
      * @param string $dataFile : the file to be read and decoded
      *
-     * @return mixed
+     * @return array|null
      */
     protected function prepareData($dataFile)
     {
         $contents = file_get_contents($dataFile);
-        $rtn = json_decode($contents, true);
+        $rtn = json_decode($contents, true);//assoc array
 
         return $rtn;
     }

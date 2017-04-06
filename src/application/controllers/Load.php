@@ -41,6 +41,7 @@ class Load extends CI_Controller
     {
         log_message('info', ' entering '.__METHOD__);
         parent::__construct();
+        $this->load->helper('file');
     }
 
     /**
@@ -57,29 +58,41 @@ class Load extends CI_Controller
         $data['xmlFile'] = '';
         $data['json'] = '';
         $data['allowed'] = 'no';
+        $dataList = '';
         //Decoder part
         if ($_FILES) {
             echo '<hr>';
-            $filedata = $_FILES['filedata'];
-            $dataName = $filedata['name'];
-            $dataType = $filedata['type'];
-            $dataError = $filedata['error'];
-            $dataSize = $filedata['size'];
-            $dataList = '';
+            $fileData = $_FILES['filedata'];
+            $dataName = $fileData['name'];
+            $dataType = $fileData['type'];
+            $dataError = $fileData['error'];
+            $dataSize = $fileData['size'];
             if ($dataError == 0) {
                 switch ($dataType) {
-                case 'text/plain': //tab separated
-                case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'://excel new
-                case 'application/vnd.ms-excel': //excel old Excel5
-                case 'application/json': // json text file
-                case 'text/csv': //comma separated
-                case 'text/xml': //xml in a text file
-                case 'application/octet-stream': //generic
-                    $data['allowed'] = 'yes';
-                    $dataList = $this->decodeData($filedata['tmp_name'], $dataType);
-                    break;
-                default;
-                    $data['allowed'] = 'no';
+                    case 'text/plain': //tab separated
+                    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'://excel new
+                    case 'application/vnd.ms-excel': //excel old Excel5
+                    case 'application/json': // json text file
+                    case 'text/csv': //comma separated
+                    case 'text/xml': //xml in a text file
+                        $data['allowed'] = 'yes';
+                        $dataList = $this->decodeData($fileData['tmp_name'], $dataType);
+                        break;
+                    case 'application/octet-stream':
+                        $mime = get_mime_by_extension($dataName);
+                        if ($mime) {
+                            $data['allowed'] = 'yes';
+                            $dataList = $this->decodeData($fileData['tmp_name'], $mime);
+                        } else {
+                            if (substr($dataName, -4) == '.xls') {
+                                $data['allowed'] = 'yes';
+                                $mime = 'application/vnd.ms-excel';
+                                $dataList = $this->decodeData($fileData['tmp_name'], $mime);
+                            }
+                        }
+                        break;
+                    default;
+                        $data['allowed'] = 'no';
                 }
             }
         }
@@ -131,7 +144,7 @@ class Load extends CI_Controller
      * @param string $file       : the file containing the pax list
      * @param string $fileFormat : the format of the file
      *
-     * @return mixed|void
+     * @return array|null
      */
     public function decodeData($file, $fileFormat)
     {
@@ -195,7 +208,7 @@ class Load extends CI_Controller
                 break;
            default:
                 log_message('INFO', 'Unsupported format: '.$fileFormat);
-                return;
+                return null;
         }
 
         $this->load->library('Decoder/GenericDecoder', ['deFac' => $decoderFactory]);
@@ -224,7 +237,7 @@ class Load extends CI_Controller
             $filterFactory->addFilterFactory(
                 $format,
                 function () {
-                    return new PassengersFilter($dataList);
+                    return new PassengersFilter();
                 }
             );
             break;
