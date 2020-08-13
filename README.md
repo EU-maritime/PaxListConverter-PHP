@@ -14,7 +14,7 @@ v1.0.0
 
 ### How do I get set up? ###
 
-* The pdf is explaining everything.
+* The pdf (you can find it in Docs) is explaining everything.
 
 ### Contribution guidelines ###
 
